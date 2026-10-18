@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // 1 & 2. Seed Master Data RT & Akun Pengurus Sistem (AMAT MAJA & Ketua RT 01-04)
         $this->call(UserSeeder::class);
+        $this->call(LetterTypeSeeder::class);
 
         // Data 5 Rumah per RT beserta Penghuninya
         $rts = Rt::orderBy('nomor_rt')->get();

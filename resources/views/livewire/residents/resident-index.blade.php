@@ -280,7 +280,7 @@
             </table>
         </div>
 
-        @if($residents->hasPages())
+        @if($residents->total() > 0)
             <div class="p-4 bg-slate-50/50 border-t border-slate-100">
                 {{ $residents->links() }}
             </div>

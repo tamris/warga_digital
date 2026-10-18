@@ -12,7 +12,7 @@
                 </span>
             </div>
             <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
-                Selamat Bertugas, {{ $user->nama }}
+                {{ $greeting }}, {{ $user->nama }}
             </h1>
         </div>
 
@@ -138,7 +138,7 @@
             </div>
             <div class="pt-2.5 border-t border-slate-100 text-xs text-slate-500 font-medium flex items-center justify-between">
                 <span>KTP luar wilayah</span>
-                <span class="text-slate-400">• Pindah: <strong class="text-slate-700">{{ $totalPindah }}</strong></span>
+                <span class="text-slate-400">Pindah: <strong class="text-slate-700">{{ $totalPindah }}</strong></span>
             </div>
         </div>
     </div>

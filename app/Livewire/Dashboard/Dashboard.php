@@ -77,8 +77,18 @@ class Dashboard extends Component
             ->take(5)
             ->get();
 
+        // Sapaan Berdasarkan Waktu (WIB)
+        $hour = Carbon::now('Asia/Jakarta')->hour;
+        $greeting = match (true) {
+            $hour >= 4 && $hour < 11 => 'Selamat Pagi',
+            $hour >= 11 && $hour < 15 => 'Selamat Siang',
+            $hour >= 15 && $hour < 18 => 'Selamat Sore',
+            default => 'Selamat Malam',
+        };
+
         return view('livewire.dashboard', [
             'user' => $user,
+            'greeting' => $greeting,
             'rts' => $rts,
             'totalHouses' => $totalHouses,
             'totalDihuniPemilik' => $totalDihuniPemilik,

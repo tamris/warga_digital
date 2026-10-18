@@ -47,6 +47,16 @@ class User extends Authenticatable
         return $this->role === 'admin_rw';
     }
 
+    public function isKetuaRt(): bool
+    {
+        return $this->role === 'ketua_rt';
+    }
+
+    public function isSekretarisRt(): bool
+    {
+        return $this->role === 'sekretaris_rt';
+    }
+
     public function isRtOperator(): bool
     {
         return in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);

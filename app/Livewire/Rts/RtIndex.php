@@ -8,10 +8,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Title('Master Data Wilayah RT')]
 class RtIndex extends Component
 {
+    use WithPagination;
+
     // RT Modal
     public bool $showModal = false;
 
@@ -46,6 +49,28 @@ class RtIndex extends Component
     public string $accountRtFilter = '';
 
     public string $accountRoleFilter = '';
+
+    public int $accountPerPage = 10;
+
+    public function updatingAccountSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingAccountRtFilter(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingAccountRoleFilter(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingAccountPerPage(): void
+    {
+        $this->resetPage();
+    }
 
     // Modal Konfirmasi Hapus Akun
     public bool $showDeleteUserModal = false;
@@ -284,7 +309,7 @@ class RtIndex extends Component
             });
         }
 
-        $accounts = $accountsQuery->orderBy('rt_id')->orderBy('role')->get();
+        $accounts = $accountsQuery->orderBy('rt_id')->orderBy('role')->paginate($this->accountPerPage);
 
         return view('livewire.rts.rt-index', [
             'rts' => $rts,

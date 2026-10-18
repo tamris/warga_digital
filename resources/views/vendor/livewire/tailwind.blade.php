@@ -116,5 +116,45 @@ $scrollIntoViewJsSnippet = ($scrollTo !== false)
                 </div>
             </div>
         </nav>
+    @elseif ($paginator->total() > 0)
+        <nav role="navigation" aria-label="Pagination Navigation" class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div class="flex-1 flex items-center justify-between w-full">
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">
+                        <span>Menampilkan</span>
+                        <span class="font-bold text-slate-800">{{ $paginator->firstItem() ?? 1 }}</span>
+                        <span>sampai</span>
+                        <span class="font-bold text-slate-800">{{ $paginator->lastItem() ?? $paginator->total() }}</span>
+                        <span>dari</span>
+                        <span class="font-bold text-slate-800">{{ $paginator->total() }}</span>
+                        <span>hasil</span>
+                    </p>
+                </div>
+
+                <div>
+                    <span class="inline-flex items-center -space-x-px rounded-lg shadow-2xs border border-slate-200 bg-white overflow-hidden text-xs">
+                        <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
+                            <span class="inline-flex items-center px-2.5 py-1.5 text-slate-300 bg-slate-50 cursor-not-allowed" aria-hidden="true">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                </svg>
+                            </span>
+                        </span>
+
+                        <span aria-current="page">
+                            <span class="inline-flex items-center px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 border-x border-emerald-600 cursor-default shadow-2xs z-10">1</span>
+                        </span>
+
+                        <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
+                            <span class="inline-flex items-center px-2.5 py-1.5 text-slate-300 bg-slate-50 cursor-not-allowed" aria-hidden="true">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </nav>
     @endif
 </div>

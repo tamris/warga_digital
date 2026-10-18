@@ -211,7 +211,7 @@
             </table>
         </div>
 
-        @if($houses->hasPages())
+        @if($houses->total() > 0)
             <div class="p-4 bg-slate-50/50 border-t border-slate-100">
                 {{ $houses->links() }}
             </div>

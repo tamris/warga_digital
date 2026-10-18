@@ -158,7 +158,14 @@
                     <option value="bendahara_rt">Bendahara RT</option>
                 </select>
 
-              
+                <!-- Pilihan Jumlah Per Halaman -->
+                <select wire:model.live="accountPerPage" 
+                        class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white"
+                        title="Jumlah akun per halaman">
+                    <option value="10">10 / hal</option>
+                    <option value="25">25 / hal</option>
+                    <option value="50">50 / hal</option>
+                </select>
             </div>
         </div>
 
@@ -269,6 +276,12 @@
                 </tbody>
             </table>
         </div>
+
+        @if($accounts->total() > 0)
+            <div class="p-4 bg-slate-50/50 border-t border-slate-100">
+                {{ $accounts->links() }}
+            </div>
+        @endif
     </div>
 
     <!-- MODAL 1: TAMBAH / EDIT RT -->
