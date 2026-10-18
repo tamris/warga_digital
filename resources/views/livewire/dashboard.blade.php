@@ -45,18 +45,30 @@
         </div>
     </div>
 
-    <!-- 2. KARTU STATISTIK UTAMA (KOMPAK & PROPOSIONAL) -->
+    <!-- 2. KARTU STATISTIK UTAMA (KOMPAK & BERISI INFORMASI PADAT) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- 1. Total Rumah -->
-        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition">
-            <div class="flex items-center justify-between mb-2.5">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Unit Rumah</span>
-                <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Unit Rumah</span>
+                    <div class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    </div>
                 </div>
-            </div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2.5">
-                {{ $totalHouses }} <span class="text-xs font-semibold text-slate-400">Unit</span>
+                <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2">
+                    {{ $totalHouses }} <span class="text-xs font-semibold text-slate-400">Unit</span>
+                </div>
+                @php
+                    $pctDihuni = $totalHouses > 0 ? round(($totalDihuniPemilik / $totalHouses) * 100) : 0;
+                    $pctKontrak = $totalHouses > 0 ? round(($totalKontrak / $totalHouses) * 100) : 0;
+                    $pctKosong = $totalHouses > 0 ? round(($totalKosong / $totalHouses) * 100) : 0;
+                @endphp
+                <div class="w-full h-1.5 rounded-full bg-slate-100 flex overflow-hidden mb-2.5" title="Dihuni: {{ $pctDihuni }}% | Kontrak: {{ $pctKontrak }}% | Kosong: {{ $pctKosong }}%">
+                    <div style="width: {{ $pctDihuni }}%" class="bg-emerald-500 h-full"></div>
+                    <div style="width: {{ $pctKontrak }}%" class="bg-sky-500 h-full"></div>
+                    <div style="width: {{ $pctKosong }}%" class="bg-slate-300 h-full"></div>
+                </div>
             </div>
             <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-600">
                 <span class="text-emerald-700">Dihuni: <strong>{{ $totalDihuniPemilik }}</strong></span>
@@ -66,15 +78,25 @@
         </div>
 
         <!-- 2. Warga Terdaftar Aktif -->
-        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition">
-            <div class="flex items-center justify-between mb-2.5">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Warga Aktif</span>
-                <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Warga Aktif</span>
+                    <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
                 </div>
-            </div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-700 mb-2.5">
-                {{ $totalResidents }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
+                <div class="text-2xl sm:text-3xl font-extrabold text-emerald-700 mb-2">
+                    {{ $totalResidents }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
+                </div>
+                @php
+                    $pctLaki = $totalResidents > 0 ? round(($totalLaki / $totalResidents) * 100) : 0;
+                    $pctPerempuan = $totalResidents > 0 ? round(($totalPerempuan / $totalResidents) * 100) : 0;
+                @endphp
+                <div class="w-full h-1.5 rounded-full bg-slate-100 flex overflow-hidden mb-2.5" title="Laki-laki: {{ $pctLaki }}% | Perempuan: {{ $pctPerempuan }}%">
+                    <div style="width: {{ $pctLaki }}%" class="bg-blue-500 h-full"></div>
+                    <div style="width: {{ $pctPerempuan }}%" class="bg-pink-400 h-full"></div>
+                </div>
             </div>
             <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-600">
                 <span>Laki: <strong class="text-slate-900">{{ $totalLaki }}</strong></span>
@@ -84,15 +106,17 @@
         </div>
 
         <!-- 3. Lansia -->
-        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition">
-            <div class="flex items-center justify-between mb-2.5">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Lansia (≥ 60 Thn)</span>
-                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Lansia (≥ 60 Thn)</span>
+                    <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
                 </div>
-            </div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-amber-700 mb-2.5">
-                {{ $totalLansia }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
+                <div class="text-2xl sm:text-3xl font-extrabold text-amber-700 mb-1">
+                    {{ $totalLansia }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
+                </div>
             </div>
             <div class="pt-2.5 border-t border-slate-100 text-xs text-slate-500 font-medium">
                 Prioritas program Posyandu & Bantuan
@@ -100,167 +124,21 @@
         </div>
 
         <!-- 4. Domisili Luar -->
-        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition">
-            <div class="flex items-center justify-between mb-2.5">
-                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Domisili Luar</span>
-                <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
-                </div>
-            </div>
-            <div class="text-2xl sm:text-3xl font-extrabold text-sky-700 mb-2.5">
-                {{ $totalDomisiliLuar }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
-            </div>
-            <div class="pt-2.5 border-t border-slate-100 text-xs text-slate-500 font-medium">
-                Warga KTP luar wilayah RT
-            </div>
-        </div>
-    </div>
-
-    <!-- 3. INSIGHT OPERASIONAL KEPENDUDUKAN & HUNIAN (MENGGANTIKAN MENU CEPAT REDUNDAN) -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <!-- 1. Komposisi Hunian Rumah -->
-        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
+        <div class="bg-white rounded-xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:border-slate-300 transition flex flex-col justify-between">
             <div>
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Status Hunian Rumah</span>
-                    @php
-                        $occupancyRate = $totalHouses > 0 ? round((($totalDihuniPemilik + $totalKontrak) / $totalHouses) * 100) : 0;
-                    @endphp
-                    <span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                        {{ $occupancyRate }}% Terisi
-                    </span>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Domisili Luar</span>
+                    <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+                    </div>
                 </div>
-
-                @php
-                    $pctDihuni = $totalHouses > 0 ? round(($totalDihuniPemilik / $totalHouses) * 100) : 0;
-                    $pctKontrak = $totalHouses > 0 ? round(($totalKontrak / $totalHouses) * 100) : 0;
-                    $pctKosong = $totalHouses > 0 ? round(($totalKosong / $totalHouses) * 100) : 0;
-                @endphp
-                <div class="w-full h-3 rounded-full bg-slate-100 flex overflow-hidden mb-3.5">
-                    <div style="width: {{ $pctDihuni }}%" class="bg-emerald-500 h-full" title="Dihuni Pemilik"></div>
-                    <div style="width: {{ $pctKontrak }}%" class="bg-sky-500 h-full" title="Kontrak"></div>
-                    <div style="width: {{ $pctKosong }}%" class="bg-slate-300 h-full" title="Kosong"></div>
-                </div>
-
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center space-x-1.5 text-slate-600 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                            <span>Dihuni Pemilik</span>
-                        </span>
-                        <strong class="text-slate-900">{{ $totalDihuniPemilik }} Unit ({{ $pctDihuni }}%)</strong>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center space-x-1.5 text-slate-600 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
-                            <span>Sewa / Kontrak</span>
-                        </span>
-                        <strong class="text-slate-900">{{ $totalKontrak }} Unit ({{ $pctKontrak }}%)</strong>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center space-x-1.5 text-slate-600 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-slate-300"></span>
-                            <span>Unit Kosong</span>
-                        </span>
-                        <strong class="text-slate-900">{{ $totalKosong }} Unit ({{ $pctKosong }}%)</strong>
-                    </div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-sky-700 mb-1">
+                    {{ $totalDomisiliLuar }} <span class="text-xs font-semibold text-slate-400">Jiwa</span>
                 </div>
             </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400">Total Basis Hunian</span>
-                <span class="font-bold text-slate-900">{{ $totalHouses }} Unit Rumah</span>
-            </div>
-        </div>
-
-        <!-- 2. Komposisi Gender & Usia -->
-        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between mb-3">
-                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Demografi Warga Aktif</span>
-                    <span class="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full">
-                        {{ $totalResidents }} Jiwa
-                    </span>
-                </div>
-
-                @php
-                    $pctLaki = $totalResidents > 0 ? round(($totalLaki / $totalResidents) * 100) : 0;
-                    $pctPerempuan = $totalResidents > 0 ? round(($totalPerempuan / $totalResidents) * 100) : 0;
-                @endphp
-                <div class="w-full h-3 rounded-full bg-slate-100 flex overflow-hidden mb-3.5">
-                    <div style="width: {{ $pctLaki }}%" class="bg-blue-500 h-full" title="Laki-laki"></div>
-                    <div style="width: {{ $pctPerempuan }}%" class="bg-pink-400 h-full" title="Perempuan"></div>
-                </div>
-
-                <div class="space-y-2 text-xs">
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center space-x-1.5 text-slate-600 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                            <span>Laki-laki</span>
-                        </span>
-                        <strong class="text-slate-900">{{ $totalLaki }} Jiwa ({{ $pctLaki }}%)</strong>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center space-x-1.5 text-slate-600 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-pink-400"></span>
-                            <span>Perempuan</span>
-                        </span>
-                        <strong class="text-slate-900">{{ $totalPerempuan }} Jiwa ({{ $pctPerempuan }}%)</strong>
-                    </div>
-                    <div class="flex items-center justify-between pt-1 border-t border-slate-100">
-                        <span class="flex items-center space-x-1.5 text-amber-700 font-medium">
-                            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                            <span>Warga Lansia (≥ 60 Thn)</span>
-                        </span>
-                        <strong class="text-amber-800">{{ $totalLansia }} Jiwa</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                <span class="text-slate-400">Warga Pindah Keluar</span>
-                <span class="font-bold text-slate-700">{{ $totalPindah }} Jiwa Tercatat</span>
-            </div>
-        </div>
-
-        <!-- 3. Status Hak Akses & Kependudukan -->
-        <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-2xs flex flex-col justify-between">
-            <div>
-                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider block mb-3">Informasi Sistem Lingkungan</span>
-                <div class="space-y-2.5">
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-start space-x-2.5">
-                        <div class="w-6 h-6 rounded-md bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0 mt-0.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                        </div>
-                        <div class="text-xs">
-                            <div class="font-bold text-slate-900">Isolasi Keamanan Data</div>
-                            <div class="text-slate-500 mt-0.5">
-                                @if($user->isAdminRw())
-                                    Sebagai <strong>Admin RW</strong>, Anda dapat memantau dan menyaring seluruh RT di lingkungan RW.
-                                @else
-                                    Anda bertugas mengelola unit dan warga di wilayah <strong>RT {{ $user->rt?->nomor_rt }}</strong>.
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="p-3 bg-slate-50 rounded-lg border border-slate-100 flex items-start space-x-2.5">
-                        <div class="w-6 h-6 rounded-md bg-sky-100 text-sky-800 flex items-center justify-center shrink-0 mt-0.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0"/></svg>
-                        </div>
-                        <div class="text-xs">
-                            <div class="font-bold text-slate-900">Warga Domisili Luar</div>
-                            <div class="text-slate-500 mt-0.5">Tercatat <strong>{{ $totalDomisiliLuar }} jiwa</strong> tinggal sebagai penyewa atau pemegang KTP luar.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 text-right">
-                <a href="{{ route('residents.index') }}" wire:navigate class="text-xs font-bold text-emerald-700 hover:text-emerald-800 inline-flex items-center space-x-1">
-                    <span>Lihat Master Warga</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </a>
+            <div class="pt-2.5 border-t border-slate-100 text-xs text-slate-500 font-medium flex items-center justify-between">
+                <span>KTP luar wilayah</span>
+                <span class="text-slate-400">• Pindah: <strong class="text-slate-700">{{ $totalPindah }}</strong></span>
             </div>
         </div>
     </div>
