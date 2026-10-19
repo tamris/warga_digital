@@ -45,7 +45,7 @@ class LetterCreate extends Component
         $user = auth()->user();
 
         // Hak Akses (Hanya admin_rw, ketua_rt, dan sekretaris_rt)
-        if (! $user || (! $user->isAdminRw() && ! in_array($user->role, ['ketua_rt', 'sekretaris_rt']))) {
+        if (! $user || ! $user->canManageLetters()) {
             abort(403, 'Anda tidak memiliki hak akses untuk menerbitkan surat pengantar.');
         }
 

@@ -16,8 +16,8 @@ class LetterPrintController extends Controller
     {
         $user = auth()->user();
 
-        // Validasi Hak Akses Isolasi RT/RW
-        if (! $user || (! $user->isAdminRw() && $user->rt_id !== $letter->rt_id)) {
+        // Validasi Hak Akses Isolasi RT/RW dan Peran Pengurus
+        if (! $user || ! $user->canManageLetters() || (! $user->isAdminRw() && $user->rt_id !== $letter->rt_id)) {
             abort(403, 'Anda tidak memiliki akses ke surat pengantar di wilayah RT ini.');
         }
 
@@ -33,7 +33,7 @@ class LetterPrintController extends Controller
     {
         $user = auth()->user();
 
-        if (! $user || (! $user->isAdminRw() && $user->rt_id !== $letter->rt_id)) {
+        if (! $user || ! $user->canManageLetters() || (! $user->isAdminRw() && $user->rt_id !== $letter->rt_id)) {
             abort(403, 'Anda tidak memiliki akses ke surat pengantar di wilayah RT ini.');
         }
 

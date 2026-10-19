@@ -151,6 +151,16 @@ class Letter extends Model
      */
     public function getVerificationUrlAttribute(): string
     {
+        $configuredUrl = config('app.url');
+
+        // Jika APP_URL di .env disetel ke domain publik/remote (seperti ngrok/IP LAN),
+        // gunakan domain tersebut saat request dibuat dari localhost agar QR Code selalu dapat dipindai oleh HP/luar.
+        if ($configuredUrl && ! str_contains($configuredUrl, 'localhost') && ! str_contains($configuredUrl, '127.0.0.1')) {
+            if (! request()->hasHeader('host') || request()->getHost() === 'localhost' || request()->getHost() === '127.0.0.1') {
+                return rtrim($configuredUrl, '/').'/verifikasi-surat/'.$this->verification_code;
+            }
+        }
+
         return route('letters.verify', $this->verification_code);
     }
 

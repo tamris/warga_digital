@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $this->role === 'bendahara_rt';
     }
 
+    public function canManageLetters(): bool
+    {
+        return $this->isAdminRw() || $this->isRtOperator();
+    }
+
     public function canManageHouse(): bool
     {
         return $this->isAdminRw() || in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);

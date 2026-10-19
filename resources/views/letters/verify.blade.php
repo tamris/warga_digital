@@ -242,7 +242,7 @@
                             @else
                                 <div class="text-[11px] text-emerald-700 font-semibold flex items-center space-x-1">
                                     <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    <span>Telah ditandatangani secara elektronik {{ $letter->signed_by_rt_at ? '(' . \Carbon\Carbon::parse($letter->signed_by_rt_at)->locale('id')->translatedFormat('d M Y H:i') . ' WIB)' : '' }}</span>
+                                    <span>Telah ditandatangani {{ $letter->signed_by_rt_at ? '(' . \Carbon\Carbon::parse($letter->signed_by_rt_at)->format('d/m/Y H:i') . ')' : '' }}</span>
                                 </div>
                             @endif
                         </div>
@@ -253,7 +253,7 @@
                             @if($letter->status === 'terbit')
                                 <div class="text-[11px] text-emerald-700 font-semibold flex items-center space-x-1">
                                     <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                    <span>Telah disahkan & TTE RW {{ $letter->signed_by_rw_at ? '(' . \Carbon\Carbon::parse($letter->signed_by_rw_at)->locale('id')->translatedFormat('d M Y H:i') . ' WIB)' : '' }}</span>
+                                    <span>Telah ditandatangani {{ $letter->signed_by_rw_at ? '(' . \Carbon\Carbon::parse($letter->signed_by_rw_at)->format('d/m/Y H:i') . ')' : '' }}</span>
                                 </div>
                             @elseif($letter->status === 'menunggu_rt')
                                 <div class="text-[11px] text-amber-700 font-semibold flex items-center space-x-1">

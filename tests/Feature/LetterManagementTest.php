@@ -731,4 +731,45 @@ class LetterManagementTest extends TestCase
         $this->assertEquals('menunggu_rw', $letter->status);
         $this->assertNotNull($letter->signed_by_rt_at);
     }
+
+    public function test_bendahara_cannot_access_letters_module(): void
+    {
+        $bendahara = User::where('role', 'bendahara_rt')->firstOrFail();
+        $this->actingAs($bendahara);
+
+        // Akses langsung Livewire component ditolak
+        Livewire::test(LetterList::class)->assertForbidden();
+        Livewire::test(LetterCreate::class)->assertForbidden();
+
+        // Akses via HTTP route ditolak (403)
+        $this->get(route('letters.index'))->assertForbidden();
+        $this->get(route('letters.create'))->assertForbidden();
+    }
+
+    public function test_bendahara_does_not_see_surat_pengantar_in_navigation_menu(): void
+    {
+        $bendahara = User::where('role', 'bendahara_rt')->firstOrFail();
+        $this->actingAs($bendahara);
+
+        $response = $this->get(route('dashboard'));
+        $response->assertOk();
+        $response->assertDontSee('Surat Pengantar');
+    }
+
+    public function test_ketua_rt_and_admin_rw_can_see_surat_pengantar_in_navigation_menu(): void
+    {
+        $ketuaRt = User::where('role', 'ketua_rt')->firstOrFail();
+        $this->actingAs($ketuaRt);
+
+        $response = $this->get(route('dashboard'));
+        $response->assertOk();
+        $response->assertSee('Surat Pengantar');
+
+        $admin = User::where('role', 'admin_rw')->firstOrFail();
+        $this->actingAs($admin);
+
+        $response = $this->get(route('dashboard'));
+        $response->assertOk();
+        $response->assertSee('Surat Pengantar');
+    }
 }

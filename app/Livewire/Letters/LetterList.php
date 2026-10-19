@@ -62,6 +62,11 @@ class LetterList extends Component
 
     public function mount(): void
     {
+        $user = auth()->user();
+        if (! $user || ! $user->canManageLetters()) {
+            abort(403, 'Akses ditolak. Modul surat pengantar hanya untuk Ketua RT, Sekretaris RT, dan Admin RW.');
+        }
+
         $this->selectedYear = (string) date('Y');
     }
 

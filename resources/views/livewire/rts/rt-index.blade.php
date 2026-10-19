@@ -25,25 +25,6 @@
         </div>
     </div>
 
-    <!-- Alert Notifikasi Flash -->
-    @if (session()->has('success'))
-        <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-2xs">
-            <div class="flex items-center space-x-2">
-                <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        </div>
-    @endif
-
-    @if (session()->has('error'))
-        <div class="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-2xs">
-            <div class="flex items-center space-x-2">
-                <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                <span>{{ session('error') }}</span>
-            </div>
-        </div>
-    @endif
-
     <!-- 1. Grid Ringkasan Wilayah RT (Kompak & Rapi Sejajar) -->
     <div>
         <div class="flex items-center justify-between mb-3">
@@ -157,15 +138,7 @@
                     <option value="sekretaris_rt">Sekretaris RT</option>
                     <option value="bendahara_rt">Bendahara RT</option>
                 </select>
-
-                <!-- Pilihan Jumlah Per Halaman -->
-                <select wire:model.live="accountPerPage" 
-                        class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white"
-                        title="Jumlah akun per halaman">
-                    <option value="10">10 / hal</option>
-                    <option value="25">25 / hal</option>
-                    <option value="50">50 / hal</option>
-                </select>
+                
             </div>
         </div>
 

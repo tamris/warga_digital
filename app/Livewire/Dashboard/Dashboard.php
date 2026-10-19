@@ -80,8 +80,8 @@ class Dashboard extends Component
         // Sapaan Berdasarkan Waktu (WIB)
         $hour = Carbon::now('Asia/Jakarta')->hour;
         $greeting = match (true) {
-            $hour >= 4 && $hour < 11 => 'Selamat Pagi',
-            $hour >= 11 && $hour < 15 => 'Selamat Siang',
+            $hour >= 4 && $hour < 10 => 'Selamat Pagi',
+            $hour >= 10 && $hour < 15 => 'Selamat Siang',
             $hour >= 15 && $hour < 18 => 'Selamat Sore',
             default => 'Selamat Malam',
         };

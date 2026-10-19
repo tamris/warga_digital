@@ -29,16 +29,6 @@
         @endif
     </div>
 
-    <!-- Alert Notifikasi -->
-    @if(session('success'))
-        <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold rounded-xl flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                <span>{{ session('success') }}</span>
-            </div>
-        </div>
-    @endif
-
     <!-- Kartu Statistik Cepat (4 Kolom Rapi) -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
         <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-2xs flex items-center justify-between">
@@ -120,13 +110,13 @@
                 <button type="button" 
                         wire:click="$set('selectedStatus', 'menunggu_rt')" 
                         class="h-9 px-3.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition shadow-2xs">
-                    Tampilkan Pending RT
+                    Tampilkan Pending
                 </button>
                 <button type="button" 
                         wire:click="openBulkApproveRtModal" 
                         class="h-9 px-4 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold inline-flex items-center space-x-1.5 transition shadow-xs">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    <span>Setujui Semua (TTE RT)</span>
+                    <span>Setujui Semua</span>
                 </button>
             </div>
         </div>
@@ -159,13 +149,13 @@
                 <button type="button" 
                         wire:click="$set('selectedStatus', 'menunggu_rw')" 
                         class="h-9 px-3.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-bold transition shadow-2xs">
-                    Tampilkan Pending RW
+                    Tampilkan Pending
                 </button>
                 <button type="button" 
                         wire:click="openBulkApproveModal" 
                         class="h-9 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold inline-flex items-center space-x-1.5 transition shadow-xs">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    <span>Setujui Semua (TTE RW)</span>
+                    <span>Setujui Semua</span>
                 </button>
             </div>
         </div>
@@ -307,7 +297,7 @@
                                             class="h-7 px-2.5 rounded-md bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold inline-flex items-center space-x-1 transition shadow-2xs"
                                             title="Buka Konfirmasi Pengesahan & TTE RT">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        <span>Setujui (TTE RT)</span>
+                                        <span>Setujui</span>
                                     </button>
 
                                     <button type="button" 
@@ -326,7 +316,7 @@
                                             class="h-7 px-2.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold inline-flex items-center space-x-1 transition shadow-2xs"
                                             title="Buka Konfirmasi Pengesahan & TTE RW">
                                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                        <span>Setujui (TTE RW)</span>
+                                        <span>Setujui</span>
                                     </button>
 
                                     <button type="button" 
@@ -345,7 +335,7 @@
                                        class="h-7 px-2.5 rounded-md bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 text-xs font-semibold inline-flex items-center space-x-1 transition shadow-2xs"
                                        title="{{ in_array($letter->status, ['menunggu_rt', 'menunggu_rw']) ? 'Pratinjau Draf Surat' : 'Cetak Surat (Tab Baru)' }}">
                                         <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                                        <span>{{ in_array($letter->status, ['menunggu_rt', 'menunggu_rw']) ? 'Draf' : 'Cetak' }}</span>
+                                        <span>{{ in_array($letter->status, ['menunggu_rt', 'menunggu_rw']) ? '' : '' }}</span>
                                     </a>
 
                                     <a href="{{ route('letters.download', $letter->id) }}" 
