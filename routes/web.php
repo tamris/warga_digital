@@ -5,6 +5,8 @@ use App\Http\Controllers\LetterVerificationController;
 use App\Http\Controllers\ResidentExportController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Finance\CashLedgerIndex;
+use App\Livewire\Finance\DuesMatrix;
 use App\Livewire\Houses\HouseDetail;
 use App\Livewire\Houses\HouseIndex;
 use App\Livewire\Letters\LetterCreate;
@@ -59,4 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/letters/create', LetterCreate::class)->name('letters.create');
     Route::get('/letters/{letter}/print', [LetterPrintController::class, 'show'])->name('letters.print');
     Route::get('/letters/{letter}/download', [LetterPrintController::class, 'download'])->name('letters.download');
+
+    // Modul Keuangan & Kas RT/RW
+    Route::get('/finance/dues', DuesMatrix::class)->name('finance.dues');
+    Route::get('/finance/cash-ledger', CashLedgerIndex::class)->name('finance.cash-ledger');
 });

@@ -44,7 +44,17 @@ class User extends Authenticatable
 
     public function isAdminRw(): bool
     {
-        return $this->role === 'admin_rw';
+        return in_array($this->role, ['admin_rw', 'ketua_rw'], true);
+    }
+
+    public function isRwLevel(): bool
+    {
+        return in_array($this->role, ['admin_rw', 'ketua_rw', 'sekretaris_rw', 'bendahara_rw'], true);
+    }
+
+    public function isRtLevel(): bool
+    {
+        return in_array($this->role, ['ketua_rt', 'sekretaris_rt', 'bendahara_rt'], true);
     }
 
     public function isKetuaRt(): bool
@@ -62,24 +72,49 @@ class User extends Authenticatable
         return in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);
     }
 
-    public function isBendahara(): bool
+    public function isBendaharaRt(): bool
     {
         return $this->role === 'bendahara_rt';
     }
 
+    public function isBendaharaRw(): bool
+    {
+        return $this->role === 'bendahara_rw';
+    }
+
+    public function isBendahara(): bool
+    {
+        return in_array($this->role, ['bendahara_rt', 'bendahara_rw'], true);
+    }
+
+    public function canManageFinance(): bool
+    {
+        return in_array($this->role, ['admin_rw', 'ketua_rw', 'bendahara_rw', 'ketua_rt', 'bendahara_rt'], true);
+    }
+
+    public function canManageRtFinance(): bool
+    {
+        return in_array($this->role, ['bendahara_rt', 'ketua_rt'], true);
+    }
+
+    public function canManageRwFinance(): bool
+    {
+        return in_array($this->role, ['admin_rw', 'ketua_rw', 'bendahara_rw'], true);
+    }
+
     public function canManageLetters(): bool
     {
-        return $this->isAdminRw() || $this->isRtOperator();
+        return $this->isRwLevel() || $this->isRtOperator();
     }
 
     public function canManageHouse(): bool
     {
-        return $this->isAdminRw() || in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);
+        return $this->isRwLevel() || in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);
     }
 
     public function canDeleteHouse(): bool
     {
-        return $this->isAdminRw() || $this->role === 'ketua_rt';
+        return $this->isRwLevel() || $this->role === 'ketua_rt';
     }
 
     public function isPengurusRt(): bool
@@ -90,7 +125,10 @@ class User extends Authenticatable
     public function getRoleLabelAttribute(): string
     {
         return match ($this->role) {
-            'admin_rw' => 'Ketua RW',
+            'admin_rw' => 'Ketua RW (Admin)',
+            'ketua_rw' => 'Ketua RW',
+            'sekretaris_rw' => 'Sekretaris RW',
+            'bendahara_rw' => 'Bendahara RW',
             'ketua_rt' => 'Ketua RT',
             'sekretaris_rt' => 'Sekretaris RT',
             'bendahara_rt' => 'Bendahara RT',

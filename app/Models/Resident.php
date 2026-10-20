@@ -42,7 +42,7 @@ class Resident extends Model
      */
     public function scopeAccessibleBy(Builder $query, User $user, ?int $selectedRtId = null): Builder
     {
-        if ($user->isAdminRw()) {
+        if ($user->isRwLevel()) {
             return $selectedRtId
                 ? $query->whereHas('house', fn ($q) => $q->where('rt_id', $selectedRtId))
                 : $query;
@@ -60,7 +60,7 @@ class Resident extends Model
     public function scopeForCurrentUser(Builder $query): Builder
     {
         $user = auth()->user();
-        if ($user && ! $user->isAdminRw() && $user->rt_id) {
+        if ($user && ! $user->isRwLevel() && $user->rt_id) {
             return $query->whereHas('house', function (Builder $q) use ($user) {
                 $q->where('rt_id', $user->rt_id);
             });

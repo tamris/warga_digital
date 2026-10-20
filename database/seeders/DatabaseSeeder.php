@@ -227,5 +227,8 @@ class DatabaseSeeder extends Seeder
                 'catatan' => 'Rumah kosong belum berpenghuni, kunci dititipkan ke Pak RT',
             ]);
         }
+
+        // 3. Seed Modul Keuangan & Kas (Tarif, Iuran, Buku Kas)
+        $this->call(FinanceSeeder::class);
     }
 }

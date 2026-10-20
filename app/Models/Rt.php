@@ -41,6 +41,30 @@ class Rt extends Model
     }
 
     /**
+     * @return HasMany<FeeSetting, $this>
+     */
+    public function feeSettings(): HasMany
+    {
+        return $this->hasMany(FeeSetting::class);
+    }
+
+    /**
+     * @return HasMany<HouseDue, $this>
+     */
+    public function houseDues(): HasMany
+    {
+        return $this->hasMany(HouseDue::class);
+    }
+
+    /**
+     * @return HasMany<CashLedger, $this>
+     */
+    public function cashLedgers(): HasMany
+    {
+        return $this->hasMany(CashLedger::class);
+    }
+
+    /**
      * Nomor WhatsApp Ketua RT terformat rapi (contoh: 0813-9149-7365).
      */
     public function getFormattedWaKetuaAttribute(): ?string

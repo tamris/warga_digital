@@ -203,7 +203,8 @@ class HouseIndex extends Component
                     });
             })
             ->withCount(['residents as total_jiwa' => fn ($q) => $q->where('status_warga', 'aktif')])
-            ->latest()
+            ->orderBy('rt_id')
+            ->orderBy('nomor_rumah')
             ->paginate(15);
 
         return view('livewire.houses.house-index', [

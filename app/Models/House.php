@@ -45,6 +45,14 @@ class House extends Model
     }
 
     /**
+     * @return HasMany<HouseDue, $this>
+     */
+    public function dues(): HasMany
+    {
+        return $this->hasMany(HouseDue::class);
+    }
+
+    /**
      * SCOPE WAJIB: Membatasi query sesuai identitas pengguna yang login (Sesuai Bab 4 baru.md).
      *
      * @param  Builder<House>  $query
@@ -52,7 +60,7 @@ class House extends Model
      */
     public function scopeAccessibleBy(Builder $query, User $user, ?int $selectedRtId = null): Builder
     {
-        if ($user->isAdminRw()) {
+        if ($user->isRwLevel()) {
             return $selectedRtId ? $query->where('rt_id', $selectedRtId) : $query;
         }
 
@@ -69,7 +77,7 @@ class House extends Model
     public function scopeForCurrentUser(Builder $query): Builder
     {
         $user = auth()->user();
-        if ($user && ! $user->isAdminRw() && $user->rt_id) {
+        if ($user && ! $user->isRwLevel() && $user->rt_id) {
             return $query->where('rt_id', $user->rt_id);
         }
 
