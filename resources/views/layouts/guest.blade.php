@@ -8,7 +8,7 @@
     @livewireStyles
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 font-sans antialiased">
-    <div class="w-full max-w-lg">
+    <div class="w-full {{ $maxWidth ?? 'max-w-lg' }} my-auto">
         {{ $slot }}
     </div>
     @livewireScripts

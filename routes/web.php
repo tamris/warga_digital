@@ -3,6 +3,7 @@
 use App\Http\Controllers\LetterPrintController;
 use App\Http\Controllers\LetterVerificationController;
 use App\Http\Controllers\ResidentExportController;
+use App\Http\Controllers\ResidentImportController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Finance\CashLedgerIndex;
@@ -11,6 +12,7 @@ use App\Livewire\Houses\HouseDetail;
 use App\Livewire\Houses\HouseIndex;
 use App\Livewire\Letters\LetterCreate;
 use App\Livewire\Letters\LetterList;
+use App\Livewire\Public\PublicSensus;
 use App\Livewire\Residents\ResidentIndex;
 use App\Livewire\Rts\RtIndex;
 use App\Models\User;
@@ -18,8 +20,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Rute Autentikasi Tamu & Verifikasi Surat Publik (Scan QR TTE)
+// Rute Publik (Tamu, Sensus Mandiri Warga, & Verifikasi Surat Scan QR TTE)
 Route::get('/login', Login::class)->name('login')->middleware('guest');
+Route::get('/sensus/{nomor_rt?}', PublicSensus::class)->name('public.sensus');
 Route::get('/verifikasi-surat/{code}', [LetterVerificationController::class, 'verify'])->name('letters.verify');
 
 // Rute Keluar (Logout)
@@ -52,6 +55,7 @@ Route::middleware('auth')->group(function () {
     // Modul Master Data Warga
     Route::get('/residents', ResidentIndex::class)->name('residents.index');
     Route::get('/residents/export', [ResidentExportController::class, 'export'])->name('residents.export');
+    Route::get('/residents/import/template', [ResidentImportController::class, 'downloadTemplate'])->name('residents.import.template');
 
     // Modul Master Wilayah RT (Khusus Admin RW)
     Route::get('/rts', RtIndex::class)->name('rts.index');

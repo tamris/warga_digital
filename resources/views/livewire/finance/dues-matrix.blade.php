@@ -660,7 +660,9 @@
                          class="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/60 hover:bg-slate-50 transition space-y-2">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
-                                <span class="w-6 h-6 rounded-lg bg-blue-100 text-blue-700 text-xs flex items-center justify-center">🏠</span>
+                                <span class="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                                </span>
                                 <span class="text-xs font-bold text-slate-800">Rumah Hunian / Standar</span>
                             </div>
                             <span class="text-[10px] font-semibold text-slate-400">Warga Reguler</span>
@@ -682,7 +684,9 @@
                          class="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/60 hover:bg-slate-50 transition space-y-2">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
-                                <span class="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 text-xs flex items-center justify-center">🏪</span>
+                                <span class="w-6 h-6 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                                </span>
                                 <span class="text-xs font-bold text-slate-800">Tempat Usaha / Toko / Ruko</span>
                             </div>
                             <span class="text-[10px] font-semibold text-slate-400">Komersial</span>
@@ -704,7 +708,9 @@
                          class="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/60 hover:bg-slate-50 transition space-y-2">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-2">
-                                <span class="w-6 h-6 rounded-lg bg-slate-200 text-slate-700 text-xs flex items-center justify-center">🚪</span>
+                                <span class="w-6 h-6 rounded-lg bg-slate-100 text-slate-600 border border-slate-200 flex items-center justify-center">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>
+                                </span>
                                 <span class="text-xs font-bold text-slate-800">Rumah Kosong / Kavling</span>
                             </div>
                             <span class="text-[10px] font-semibold text-slate-400">Tanpa Penghuni</span>

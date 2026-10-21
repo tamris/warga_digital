@@ -21,7 +21,7 @@ return new class extends Migration
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rt_id')->constrained('rts')->cascadeOnDelete();
-            $table->foreignId('resident_id')->constrained('residents')->restrictOnDelete();
+            $table->foreignId('resident_id')->nullable()->constrained('residents')->nullOnDelete();
             $table->foreignId('created_by_user_id')->constrained('users')->restrictOnDelete();
 
             // Identitas Penomoran Surat

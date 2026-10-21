@@ -288,7 +288,9 @@
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor WhatsApp Ketua RT</label>
-                    <input type="text" wire:model="no_wa_ketua" placeholder="Contoh: 081234567804"
+                    <input type="tel" inputmode="numeric" maxlength="17" wire:model="no_wa_ketua" 
+                           oninput="let v = this.value.replace(/[^0-9]/g, '').slice(0, 14); let p = v.match(/.{1,4}/g); this.value = p ? p.join('-') : '';"
+                           placeholder="Contoh: 0808-9898-9898"
                            class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-mono text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                 </div>
 
@@ -391,9 +393,11 @@
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                         Nomor WhatsApp <span class="text-rose-500">*</span>
                     </label>
-                    <input type="text" wire:model="user_no_wa" placeholder="Contoh: 081234567801"
+                    <input type="tel" inputmode="numeric" maxlength="17" wire:model="user_no_wa" 
+                           oninput="let v = this.value.replace(/[^0-9]/g, '').slice(0, 14); let p = v.match(/.{1,4}/g); this.value = p ? p.join('-') : '';"
+                           placeholder="Contoh: 0808-9898-9898"
                            class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-mono text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
-                    <p class="text-[11px] text-slate-400 mt-1">Digunakan untuk komunikasi pengurus dan reset akun.</p>
+                    <p class="text-[11px] text-slate-400 mt-1">Digunakan untuk komunikasi pengurus dan reset akun. Format: 0808-9898-9898.</p>
                     @error('user_no_wa') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
                 </div>
 

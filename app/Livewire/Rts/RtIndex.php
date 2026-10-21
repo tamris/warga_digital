@@ -104,12 +104,17 @@ class RtIndex extends Component
         $this->editingRtId = $rt->id;
         $this->nomor_rt = $rt->nomor_rt;
         $this->nama_ketua = $rt->nama_ketua;
-        $this->no_wa_ketua = $rt->no_wa_ketua;
+        $rawWa = preg_replace('/[^0-9]/', '', (string) ($rt->no_wa_ketua ?? ''));
+        $this->no_wa_ketua = $rawWa ? implode('-', str_split($rawWa, 4)) : '';
         $this->showModal = true;
     }
 
     public function saveRt(): void
     {
+        if ($this->no_wa_ketua) {
+            $this->no_wa_ketua = preg_replace('/[^0-9]/', '', (string) $this->no_wa_ketua);
+        }
+
         $uniqueRule = $this->editingRtId ? 'unique:rts,nomor_rt,'.$this->editingRtId : 'unique:rts,nomor_rt';
 
         $this->validate([
@@ -164,12 +169,15 @@ class RtIndex extends Component
         $this->user_username = $user->username;
         $this->user_password = ''; // Kosongkan jika tidak ingin ganti kata sandi
         $this->user_role = $user->role;
-        $this->user_no_wa = $user->no_wa ?? '';
+        $rawWa = preg_replace('/[^0-9]/', '', (string) ($user->no_wa ?? ''));
+        $this->user_no_wa = $rawWa ? implode('-', str_split($rawWa, 4)) : '';
         $this->showUserModal = true;
     }
 
     public function saveUser(): void
     {
+        $this->user_no_wa = preg_replace('/[^0-9]/', '', (string) $this->user_no_wa);
+
         if ($this->editingUserId) {
             $this->validate([
                 'selectedRtIdForUser' => 'required|exists:rts,id',

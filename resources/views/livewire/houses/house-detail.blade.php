@@ -274,7 +274,8 @@
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                             Nomor Kartu Keluarga (No. KK) <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" wire:model="form_no_kk" maxlength="16"
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" wire:model="form_no_kk" maxlength="16"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                placeholder="16 digit angka No. KK"
                                class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-mono text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                         @error('form_no_kk') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
@@ -285,7 +286,8 @@
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                             NIK (Nomor Induk Kependudukan) <span class="text-rose-500">*</span>
                         </label>
-                        <input type="text" wire:model="form_nik" maxlength="16"
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" wire:model="form_nik" maxlength="16"
+                               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                placeholder="16 digit angka NIK"
                                class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-mono text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                         @error('form_nik') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
@@ -298,6 +300,7 @@
                         Nama Lengkap (Sesuai KTP) <span class="text-rose-500">*</span>
                     </label>
                     <input type="text" wire:model="form_nama_lengkap" 
+                           oninput="this.value = this.value.toUpperCase()"
                            placeholder="Contoh: AHMAD HIDAYAT"
                            class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-semibold text-slate-900 uppercase focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                     @error('form_nama_lengkap') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
@@ -339,8 +342,9 @@
                             Tempat Lahir <span class="text-rose-500">*</span>
                         </label>
                         <input type="text" wire:model="form_tempat_lahir" 
+                               oninput="this.value = this.value.toUpperCase()"
                                placeholder="Contoh: Jakarta"
-                               class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-medium text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
+                               class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-medium text-slate-900 uppercase focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                         @error('form_tempat_lahir') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
                     </div>
 
@@ -377,8 +381,9 @@
                             Pekerjaan <span class="text-rose-500">*</span>
                         </label>
                         <input type="text" wire:model="form_pekerjaan" 
+                               oninput="this.value = this.value.toUpperCase()"
                                placeholder="Contoh: Karyawan Swasta, PNS..."
-                               class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-medium text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
+                               class="w-full h-11 px-3.5 border border-slate-300 rounded-xl text-sm font-medium text-slate-900 uppercase focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                         @error('form_pekerjaan') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror
                     </div>
                 </div>
@@ -434,8 +439,9 @@
                         <span x-show="statusKeluarga === 'kepala_keluarga'" class="text-rose-500 font-bold">* (Wajib Diisi untuk Kepala Keluarga)</span>
                         <span x-show="statusKeluarga !== 'kepala_keluarga'" class="text-slate-400 font-normal">(Opsional)</span>
                     </label>
-                    <input type="text" wire:model="form_no_wa" 
-                           placeholder="Contoh: 081234567890"
+                    <input type="tel" inputmode="numeric" maxlength="17" wire:model="form_no_wa" 
+                           oninput="let v = this.value.replace(/[^0-9]/g, '').slice(0, 14); let p = v.match(/.{1,4}/g); this.value = p ? p.join('-') : '';"
+                           placeholder="Contoh: 0808-9898-9898"
                            class="w-full h-11 px-3.5 border border-slate-300 rounded-lg text-sm font-mono text-slate-900 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                     <p class="text-xs text-slate-500 mt-1">Digunakan untuk mengirim bukti iuran dan surat pengantar via WA.</p>
                     @error('form_no_wa') <p class="text-xs font-bold text-rose-600 mt-1">{{ $message }}</p> @enderror

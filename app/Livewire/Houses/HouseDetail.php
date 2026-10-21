@@ -118,8 +118,8 @@ class HouseDetail extends Component
         $this->form_agama = $resident->agama;
         $this->form_pekerjaan = $resident->pekerjaan;
         $this->form_status_keluarga = $resident->status_keluarga;
-        $this->form_status_kependudukan = $resident->status_kependudukan;
-        $this->form_no_wa = $resident->no_wa ?? '';
+        $rawWa = preg_replace('/[^0-9]/', '', (string) ($resident->no_wa ?? ''));
+        $this->form_no_wa = $rawWa ? implode('-', str_split($rawWa, 4)) : '';
         $this->form_status_warga = $resident->status_warga;
 
         $this->showResidentModal = true;
@@ -133,6 +133,12 @@ class HouseDetail extends Component
 
     public function saveResident(): void
     {
+        $this->form_no_kk = preg_replace('/[^0-9]/', '', (string) $this->form_no_kk);
+        $this->form_nik = preg_replace('/[^0-9]/', '', (string) $this->form_nik);
+        if ($this->form_no_wa) {
+            $this->form_no_wa = preg_replace('/[^0-9]/', '', (string) $this->form_no_wa);
+        }
+
         $uniqueNikRule = Rule::unique('residents', 'nik');
         if ($this->editingResidentId) {
             $uniqueNikRule = $uniqueNikRule->ignore($this->editingResidentId);
@@ -156,9 +162,9 @@ class HouseDetail extends Component
             'form_status_warga' => ['required', 'in:aktif,pindah,meninggal'],
         ], [
             'form_no_kk.required' => 'Nomor Kartu Keluarga (No. KK) wajib diisi.',
-            'form_no_kk.digits' => 'Nomor Kartu Keluarga (No. KK) harus tepat 16 digit angka.',
+            'form_no_kk.digits' => 'Nomor Kartu Keluarga (No. KK) harus berupa angka dan tepat 16 digit.',
             'form_nik.required' => 'Nomor Induk Kependudukan (NIK) wajib diisi.',
-            'form_nik.digits' => 'Nomor Induk Kependudukan (NIK) harus tepat 16 digit angka.',
+            'form_nik.digits' => 'Nomor Induk Kependudukan (NIK) harus berupa angka dan tepat 16 digit.',
             'form_nik.unique' => 'NIK ini sudah terdaftar di database.',
             'form_nama_lengkap.required' => 'Nama lengkap wajib diisi sesuai KTP.',
             'form_tempat_lahir.required' => 'Tempat lahir wajib diisi.',
@@ -174,10 +180,10 @@ class HouseDetail extends Component
             'nik' => $this->form_nik,
             'nama_lengkap' => strtoupper(trim($this->form_nama_lengkap)),
             'jenis_kelamin' => $this->form_jenis_kelamin,
-            'tempat_lahir' => trim($this->form_tempat_lahir),
+            'tempat_lahir' => strtoupper(trim($this->form_tempat_lahir)),
             'tanggal_lahir' => $this->form_tanggal_lahir,
             'agama' => $this->form_agama,
-            'pekerjaan' => trim($this->form_pekerjaan),
+            'pekerjaan' => strtoupper(trim($this->form_pekerjaan)),
             'status_keluarga' => $this->form_status_keluarga,
             'status_kependudukan' => $this->form_status_kependudukan,
             'no_wa' => $this->form_no_wa ? trim($this->form_no_wa) : null,
