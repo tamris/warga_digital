@@ -229,6 +229,10 @@ class LetterManagementTest extends TestCase
             ->assertOk()
             ->assertSee('Validasi Keaslian Dokumen')
             ->assertSee('Terverifikasi Sah')
+            ->assertSee('Unduh PDF')
+            ->assertSee('Lihat & Cetak Surat')
+            ->assertSee(route('letters.public.download', $letter->verification_code))
+            ->assertSee(route('letters.public.print', $letter->verification_code))
             ->assertSee($letter->nomor_surat)
             ->assertSee(strtoupper($letter->snapshot_nama));
 
@@ -271,6 +275,115 @@ class LetterManagementTest extends TestCase
         $this->get(route('letters.verify', 'invalid-token-code-12345'))
             ->assertOk()
             ->assertSee('Dokumen Tidak Ditemukan');
+    }
+
+    public function test_wa_share_link_contains_verification_url(): void
+    {
+        $rt1 = Rt::where('nomor_rt', '001')->firstOrFail();
+        $resident = Resident::whereHas('house', fn ($q) => $q->where('rt_id', $rt1->id))->firstOrFail();
+        $resident->update(['no_wa' => '081234567890']);
+
+        $letter = Letter::create([
+            'rt_id' => $rt1->id,
+            'resident_id' => $resident->id,
+            'nomor_urut' => 20,
+            'nomor_surat' => '020/SP/RT.01/RW.01/X/2026',
+            'tahun' => 2026,
+            'jenis_keperluan' => 'Surat Pengantar Nikah',
+            'snapshot_nama' => $resident->nama_lengkap,
+            'snapshot_nik' => $resident->nik,
+            'snapshot_no_kk' => $resident->no_kk,
+            'snapshot_ttl' => 'Tegal, 1 Januari 1990',
+            'snapshot_jenis_kelamin' => 'L',
+            'snapshot_agama' => 'Islam',
+            'snapshot_pekerjaan' => 'Wiraswasta',
+            'snapshot_alamat' => 'Slawi Kulon RT 01 RW 01',
+            'nama_ketua_rt' => 'AGUNG JATMIKO',
+            'tanggal_surat' => '2026-10-18',
+            'status' => 'terbit',
+        ]);
+
+        $waLink = $letter->wa_share_link;
+        $this->assertNotNull($waLink);
+        $this->assertStringContainsString('https://wa.me/6281234567890?text=', $waLink);
+        $this->assertStringContainsString(urlencode($letter->verification_url), $waLink);
+        $this->assertStringContainsString(urlencode($letter->nomor_surat), $waLink);
+    }
+
+    public function test_public_can_download_and_print_terbit_letter_without_auth(): void
+    {
+        $rt1 = Rt::where('nomor_rt', '001')->firstOrFail();
+        $resident = Resident::whereHas('house', fn ($q) => $q->where('rt_id', $rt1->id))->firstOrFail();
+
+        $letter = Letter::create([
+            'rt_id' => $rt1->id,
+            'resident_id' => $resident->id,
+            'nomor_urut' => 21,
+            'nomor_surat' => '021/SP/RT.01/RW.01/X/2026',
+            'tahun' => 2026,
+            'jenis_keperluan' => 'Pengantar SKCK',
+            'snapshot_nama' => $resident->nama_lengkap,
+            'snapshot_nik' => $resident->nik,
+            'snapshot_no_kk' => $resident->no_kk,
+            'snapshot_ttl' => 'Tegal, 1 Januari 1990',
+            'snapshot_jenis_kelamin' => 'L',
+            'snapshot_agama' => 'Islam',
+            'snapshot_pekerjaan' => 'Wiraswasta',
+            'snapshot_alamat' => 'Slawi Kulon RT 01 RW 01',
+            'nama_ketua_rt' => 'AGUNG JATMIKO',
+            'tanggal_surat' => '2026-10-18',
+            'status' => 'terbit',
+        ]);
+
+        // Public print view
+        $printResponse = $this->get(route('letters.public.print', $letter->verification_code));
+        $printResponse->assertOk()
+            ->assertSee($letter->nomor_surat)
+            ->assertSee('SURAT PENGANTAR')
+            ->assertSee(strtoupper($letter->snapshot_nama))
+            ->assertSee(route('letters.verify', $letter->verification_code))
+            ->assertDontSee('Kirim WhatsApp'); // Guest/public should not see WA button
+
+        // Public PDF download
+        $downloadResponse = $this->get(route('letters.public.download', $letter->verification_code));
+        $downloadResponse->assertOk();
+        $this->assertEquals('application/pdf', $downloadResponse->headers->get('content-type'));
+    }
+
+    public function test_public_cannot_download_or_print_non_terbit_letter(): void
+    {
+        $rt1 = Rt::where('nomor_rt', '001')->firstOrFail();
+        $resident = Resident::whereHas('house', fn ($q) => $q->where('rt_id', $rt1->id))->firstOrFail();
+
+        $letter = Letter::create([
+            'rt_id' => $rt1->id,
+            'resident_id' => $resident->id,
+            'nomor_urut' => 22,
+            'nomor_surat' => '022/SP/RT.01/RW.01/X/2026',
+            'tahun' => 2026,
+            'jenis_keperluan' => 'Pengantar SKCK',
+            'snapshot_nama' => $resident->nama_lengkap,
+            'snapshot_nik' => $resident->nik,
+            'snapshot_no_kk' => $resident->no_kk,
+            'snapshot_ttl' => 'Tegal, 1 Januari 1990',
+            'snapshot_jenis_kelamin' => 'L',
+            'snapshot_agama' => 'Islam',
+            'snapshot_pekerjaan' => 'Wiraswasta',
+            'snapshot_alamat' => 'Slawi Kulon RT 01 RW 01',
+            'nama_ketua_rt' => 'AGUNG JATMIKO',
+            'tanggal_surat' => '2026-10-18',
+            'status' => 'menunggu_rt',
+        ]);
+
+        // Attempting to print non-terbit letter
+        $this->get(route('letters.public.print', $letter->verification_code))->assertForbidden();
+
+        // Attempting to download non-terbit letter
+        $this->get(route('letters.public.download', $letter->verification_code))->assertForbidden();
+
+        // Attempting with invalid token
+        $this->get(route('letters.public.print', 'invalid-token'))->assertNotFound();
+        $this->get(route('letters.public.download', 'invalid-token'))->assertNotFound();
     }
 
     public function test_admin_rw_can_approve_pending_letter_with_tte(): void

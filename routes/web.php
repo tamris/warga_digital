@@ -29,6 +29,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', Login::class)->name('login')->middleware('guest');
 Route::get('/sensus/{nomor_rt?}', PublicSensus::class)->name('public.sensus');
 Route::get('/verifikasi-surat/{code}', [LetterVerificationController::class, 'verify'])->name('letters.verify');
+Route::get('/verifikasi-surat/{code}/download', [LetterVerificationController::class, 'download'])->name('letters.public.download');
+Route::get('/verifikasi-surat/{code}/print', [LetterVerificationController::class, 'print'])->name('letters.public.print');
 
 // Rute Keluar (Logout)
 Route::post('/logout', function (Request $request) {

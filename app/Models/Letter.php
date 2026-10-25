@@ -142,7 +142,17 @@ class Letter extends Model
             $cleanPhone = '62'.substr($cleanPhone, 1);
         }
 
-        $msg = "Halo Bpk/Ibu {$this->snapshot_nama}, Surat Pengantar RT Anda dengan No: *{$this->nomor_surat}* untuk keperluan *{$this->jenis_keperluan}* telah selesai diterbitkan oleh Pengurus RT. Silakan hubungi pengurus RT untuk pengambilan dokumen fisik. Terima kasih.";
+        $verifyUrl = $this->verification_url;
+
+        $msg = "Halo Bpk/Ibu *{$this->snapshot_nama}*,\n\n"
+            ."Surat Pengantar RT Anda telah selesai diproses dan disahkan secara resmi:\n"
+            ."• No. Surat: *{$this->nomor_surat}*\n"
+            ."• Keperluan: *{$this->jenis_keperluan}*\n"
+            ."• Status: *Sah Terverifikasi TTE RT & RW*\n\n"
+            ."Anda dapat memeriksa keaslian dokumen, mengunduh file PDF resmi, atau mencetak surat secara mandiri melalui tautan berikut:\n"
+            ."{$verifyUrl}\n\n"
+            ."Terima kasih.\n"
+            .'_Pengurus Lingkungan RW 01_';
 
         return 'https://wa.me/'.$cleanPhone.'?text='.urlencode($msg);
     }

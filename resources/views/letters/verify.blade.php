@@ -299,6 +299,25 @@
                     </div>
                 </div>
 
+                @if($letter->status === 'terbit')
+                    <!-- Bottom Action Buttons -->
+                    <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100">
+                        <span class="text-xs text-slate-500">Cetak atau simpan surat pengantar resmi:</span>
+                        <div class="flex items-center space-x-2 w-full sm:w-auto">
+                            <a href="{{ route('letters.public.download', $letter->verification_code) }}"
+                               class="flex-1 sm:flex-none inline-flex items-center justify-center space-x-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition">
+                                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                <span>Unduh PDF</span>
+                            </a>
+                            <a href="{{ route('letters.public.print', $letter->verification_code) }}"
+                               target="_blank"
+                               class="flex-1 sm:flex-none inline-flex items-center justify-center space-x-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition shadow-2xs">
+                                <svg class="w-3.5 h-3.5 text-emerald-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                <span>Lihat &amp; Cetak Surat</span>
+                            </a>
+                        </div>
+                    </div>
+                @endif
             </div>
         @else
             <!-- Dokumen Tidak Ditemukan -->

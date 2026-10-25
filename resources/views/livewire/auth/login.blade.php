@@ -64,11 +64,24 @@
             </div>
 
             <button type="submit" 
-                    class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-base rounded-lg shadow-sm transition duration-150 flex items-center justify-center space-x-2">
-                <span wire:loading.remove>Masuk ke Portal</span>
-                <span wire:loading class="flex items-center space-x-2">
-                    <svg class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
-                    <span>Memeriksa Akun...</span>
+                    wire:loading.attr="disabled"
+                    wire:target="login"
+                    class="w-full h-12 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 disabled:opacity-75 disabled:cursor-wait text-white font-semibold text-base rounded-lg shadow-sm hover:shadow transition-all duration-150 flex items-center justify-center space-x-2 relative group overflow-hidden">
+                <!-- Tampilan Normal -->
+                <span wire:loading.remove wire:target="login" class="inline-flex items-center space-x-2">
+                    <span>Masuk ke Portal</span>
+                    <svg class="w-4 h-4 text-emerald-200 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                </span>
+
+                <!-- Tampilan Saat Memproses (Loading) -->
+                <span wire:loading.flex wire:target="login" class="items-center justify-center space-x-2.5">
+                    <svg class="animate-spin h-5 w-5 text-white shrink-0" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                        <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                    </svg>
+                    <span class="tracking-wide font-medium">Memeriksa Akun...</span>
                 </span>
             </button>
         </form>
@@ -83,54 +96,84 @@
 
             <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 <button type="button" wire:click="quickLogin('admin_rw')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('admin_rw')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">RW</span>
+                        <span class="w-5 h-5 rounded bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('admin_rw')">RW</span>
+                            <svg wire:loading.flex wire:target="quickLogin('admin_rw')" class="animate-spin w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Admin RW</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">AMAT MAJA</div>
                 </button>
 
                 <button type="button" wire:click="quickLogin('ketua_rt01')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('ketua_rt01')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">01</span>
+                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('ketua_rt01')">01</span>
+                            <svg wire:loading.flex wire:target="quickLogin('ketua_rt01')" class="animate-spin w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Ketua RT 001</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">AGUNG JATMIKO</div>
                 </button>
 
                 <button type="button" wire:click="quickLogin('ketua_rt02')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('ketua_rt02')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">02</span>
+                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('ketua_rt02')">02</span>
+                            <svg wire:loading.flex wire:target="quickLogin('ketua_rt02')" class="animate-spin w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Ketua RT 002</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">DENY</div>
                 </button>
 
                 <button type="button" wire:click="quickLogin('ketua_rt03')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('ketua_rt03')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">03</span>
+                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('ketua_rt03')">03</span>
+                            <svg wire:loading.flex wire:target="quickLogin('ketua_rt03')" class="animate-spin w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Ketua RT 003</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">MUKHID</div>
                 </button>
 
                 <button type="button" wire:click="quickLogin('ketua_rt04')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('ketua_rt04')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">04</span>
+                        <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('ketua_rt04')">04</span>
+                            <svg wire:loading.flex wire:target="quickLogin('ketua_rt04')" class="animate-spin w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Ketua RT 004</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">SUBANDI</div>
                 </button>
 
                 <button type="button" wire:click="quickLogin('sekretaris_rt01')" 
-                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group">
+                        wire:loading.attr="disabled"
+                        wire:target="quickLogin('sekretaris_rt01')"
+                        class="p-2.5 text-left bg-slate-50 hover:bg-slate-100 active:bg-slate-200/80 border border-slate-200 hover:border-slate-300 rounded-lg transition duration-150 group disabled:opacity-60 disabled:cursor-wait">
                     <div class="flex items-center space-x-2 mb-0.5">
-                        <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">01</span>
+                        <span class="w-5 h-5 rounded bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold shrink-0">
+                            <span wire:loading.remove wire:target="quickLogin('sekretaris_rt01')">01</span>
+                            <svg wire:loading.flex wire:target="quickLogin('sekretaris_rt01')" class="animate-spin w-3 h-3 text-emerald-800" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        </span>
                         <span class="text-xs font-bold text-slate-900 group-hover:text-emerald-700">Sekretaris RT 001</span>
                     </div>
                     <div class="text-[11px] text-slate-500 font-medium truncate">Indra (No Delete)</div>

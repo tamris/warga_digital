@@ -234,7 +234,7 @@
         <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
             <!-- Sisi Kiri: Kembali & Identitas Surat -->
             <div class="flex items-center space-x-2.5 min-w-0">
-                <a href="{{ route('letters.index') }}" 
+                <a href="{{ ($isPublic ?? false) || !auth()->check() ? route('letters.verify', $letter->verification_code) : route('letters.index') }}" 
                    class="h-9 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap shrink-0">
                     <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                     <span>Kembali</span>
@@ -272,7 +272,7 @@
 
             <!-- Sisi Kanan: Action Buttons Terpadu & Rapi -->
             <div class="flex items-center flex-wrap gap-2">
-                @if($letter->wa_share_link && $letter->status === 'terbit')
+                @if(!($isPublic ?? false) && auth()->check() && $letter->wa_share_link && $letter->status === 'terbit')
                     <a href="{{ $letter->wa_share_link }}" 
                        target="_blank"
                        class="h-9 px-3 rounded-lg bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-emerald-800 text-xs font-semibold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap"
@@ -290,12 +290,21 @@
                     <span>Verifikasi TTE</span>
                 </a>
 
-                <a href="{{ route('letters.download', $letter) }}" 
-                   class="h-9 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap"
-                   title="Unduh File PDF">
-                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>Unduh PDF</span>
-                </a>
+                @if(($isPublic ?? false) || !auth()->check())
+                    <a href="{{ route('letters.public.download', $letter->verification_code) }}" 
+                       class="h-9 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap"
+                       title="Unduh File PDF">
+                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Unduh PDF</span>
+                    </a>
+                @else
+                    <a href="{{ route('letters.download', $letter) }}" 
+                       class="h-9 px-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap"
+                       title="Unduh File PDF">
+                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                        <span>Unduh PDF</span>
+                    </a>
+                @endif
 
                 <button onclick="window.print()" 
                         class="h-9 px-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold inline-flex items-center space-x-1.5 transition shadow-2xs whitespace-nowrap"
