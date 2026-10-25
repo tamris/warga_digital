@@ -282,7 +282,7 @@
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="text-xs font-semibold text-slate-500">Cari Pengajuan:</span>
-                    <input type="text" wire:model.live.debounce.200ms="search" placeholder="Cari tiket, rumah, atau nama..." class="text-xs rounded-lg border-slate-300 py-1.5 px-3 w-56">
+                    <input type="text" wire:model.live.debounce.200ms="search" placeholder="Cari tiket, rumah, atau nama..." class="text-xs rounded-lg border border-slate-300 py-1.5 px-3 w-56 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition bg-white">
                 </div>
             </div>
 
@@ -592,7 +592,7 @@
                                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                                     Wilayah RT Tujuan Import <span class="text-rose-500">*</span>
                                 </label>
-                                <select wire:model="importRtId" class="w-full text-xs rounded-xl border-slate-300 py-2.5 px-3">
+                                <select wire:model="importRtId" class="w-full text-xs font-semibold text-slate-800 bg-white border border-slate-300 rounded-xl py-2.5 px-3 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition">
                                     @foreach($rts as $rt)
                                         <option value="{{ $rt->id }}">RT {{ $rt->nomor_rt }} (Ketua: {{ $rt->nama_ketua ?? '-' }})</option>
                                     @endforeach

@@ -7,12 +7,16 @@ use App\Models\Resident;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 #[Title('Detail Rumah & Anggota Keluarga')]
 class HouseDetail extends Component
 {
     public House $house;
+
+    #[Url]
+    public ?string $from = null;
 
     // Properti Modal Form Warga (Bab 5B)
     public bool $showResidentModal = false;
@@ -57,10 +61,25 @@ class HouseDetail extends Component
 
     public string $deleteResidentName = '';
 
-    public function mount(int $id): void
+    public function mount(int $id, ?string $from = null): void
     {
         $user = auth()->user();
         abort_if(! $user, 403);
+
+        if ($from) {
+            $this->from = $from;
+        } elseif (! $this->from && request()->query('from')) {
+            $this->from = request()->query('from');
+        } elseif (! $this->from && request()->header('referer')) {
+            $referer = request()->header('referer');
+            if (str_contains($referer, 'social-aid') || str_contains($referer, 'welfare-mapping')) {
+                $this->from = 'welfare';
+            } elseif (str_contains($referer, 'residents')) {
+                $this->from = 'residents';
+            } elseif (str_contains($referer, 'dashboard')) {
+                $this->from = 'dashboard';
+            }
+        }
 
         // Validasi scoping akses per user login (Sesuai Bab 4 baru.md)
         $this->house = House::with(['rt', 'residents' => function ($q) {
@@ -256,6 +275,26 @@ class HouseDetail extends Component
         $this->showDeleteModal = false;
         $this->deleteResidentId = null;
         $this->house->load('residents');
+    }
+
+    public function getBackUrl(): string
+    {
+        return match ($this->from) {
+            'welfare', 'dtks', 'bansos' => route('social-aid.welfare-mapping'),
+            'residents' => route('residents.index'),
+            'dashboard' => route('dashboard'),
+            default => route('houses.index'),
+        };
+    }
+
+    public function getBackLabel(): string
+    {
+        return match ($this->from) {
+            'welfare', 'dtks', 'bansos' => 'Kembali ke Pemetaan Kesejahteraan & Bansos',
+            'residents' => 'Kembali ke Data Warga',
+            'dashboard' => 'Kembali ke Dashboard',
+            default => 'Kembali ke Daftar Rumah',
+        };
     }
 
     public function render(): View

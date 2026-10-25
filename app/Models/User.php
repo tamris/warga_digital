@@ -107,6 +107,21 @@ class User extends Authenticatable
         return $this->isRwLevel() || $this->isRtOperator();
     }
 
+    public function canManageSocialAid(): bool
+    {
+        return $this->isRwLevel() || $this->isRtLevel();
+    }
+
+    public function canCreateSocialAidProgram(): bool
+    {
+        return in_array($this->role, ['admin_rw', 'ketua_rw', 'sekretaris_rw'], true);
+    }
+
+    public function canProposeSocialAidRecipients(): bool
+    {
+        return in_array($this->role, ['admin_rw', 'ketua_rw', 'ketua_rt', 'sekretaris_rt'], true);
+    }
+
     public function canManageHouse(): bool
     {
         return $this->isRwLevel() || in_array($this->role, ['ketua_rt', 'sekretaris_rt'], true);

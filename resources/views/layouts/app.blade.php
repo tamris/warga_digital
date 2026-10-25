@@ -8,6 +8,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <style>
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+    </style>
 </head>
 <body x-data="{ mobileSidebarOpen: false }" class="bg-slate-50 text-slate-800 min-h-full font-sans antialiased selection:bg-emerald-500 selection:text-white">
 
@@ -33,20 +48,19 @@
          x-transition:leave="transition ease-in-out duration-200 transform"
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="-translate-x-full"
-         class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col justify-between p-5 lg:hidden"
+         class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col justify-between p-4 lg:hidden overflow-y-auto"
          style="display: none;">
         
-        <!-- Mobile Sidebar Header -->
+        <!-- Top Content -->
         <div>
-            <div class="flex items-center justify-between pb-5 border-b border-slate-100">
+            <!-- Mobile Sidebar Header -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div class="flex items-center space-x-3">
                     <div class="w-9 h-9 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold text-base shadow-sm">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                     </div>
                     <div>
-                        <div class="flex items-center space-x-1.5">
-                            <span class="text-base font-extrabold text-slate-900">WARGA DIGITAL</span>
-                            </div>
+                        <span class="text-base font-extrabold text-slate-900 block leading-tight">WARGA DIGITAL</span>
                         <span class="block text-xs font-medium text-slate-500">Sistem Multi-RT</span>
                     </div>
                 </div>
@@ -75,6 +89,16 @@
                     <span>Surat Pengantar</span>
                 </a>
                 @endif
+                @if(auth()->user()?->canManageSocialAid())
+                <a href="{{ route('social-aid.welfare-mapping') }}" wire:navigate class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('social-aid.welfare-mapping*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                    <svg class="w-5 h-5 {{ request()->routeIs('social-aid.welfare-mapping*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                    <span>Pemetaan DTKS</span>
+                </a>
+                <a href="{{ route('social-aid.programs.index') }}" wire:navigate class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('social-aid.programs*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                    <svg class="w-5 h-5 {{ request()->routeIs('social-aid.programs*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                    <span>Program Bansos</span>
+                </a>
+                @endif
                 @if(auth()->user()?->canManageFinance())
                 <a href="{{ route('finance.dues') }}" wire:navigate class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('finance.dues*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
                     <svg class="w-5 h-5 {{ request()->routeIs('finance.dues*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
@@ -88,7 +112,7 @@
                 @if(auth()->user()?->isAdminRw())
                 <a href="{{ route('rts.index') }}" wire:navigate class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('rts.*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
                     <svg class="w-5 h-5 {{ request()->routeIs('rts.*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span>Master Data RT</span>
+                    <span>Data Master RT</span>
                 </a>
                 @endif
                 <a href="{{ route('residents.export') }}" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
@@ -99,7 +123,7 @@
         </div>
 
         <!-- Mobile User & Switcher -->
-        <div class="pt-4 border-t border-slate-200 space-y-3">
+        <div class="pt-4 border-t border-slate-200 space-y-3 shrink-0">
             <div class="flex items-center space-x-3 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                 <div class="w-8 h-8 rounded-md bg-emerald-600 text-white flex items-center justify-center font-bold text-xs">
                     {{ substr(auth()->user()->nama, 0, 1) }}
@@ -112,7 +136,7 @@
             
             <form action="{{ route('logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="w-full h-10 px-3 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 text-xs font-semibold border border-slate-200 transition flex items-center justify-center space-x-2">
+                <button type="submit" class="w-full h-9 px-3 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 text-xs font-semibold border border-slate-200 transition flex items-center justify-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                     <span>Keluar dari Sistem</span>
                 </button>
@@ -121,7 +145,7 @@
     </div>
 
     <!-- DESKTOP PERMANENT SIDEBAR (LEFT) -->
-    <aside class="hidden lg:flex lg:flex-col lg:w-64 xl:w-72 lg:fixed lg:inset-y-0 lg:z-40 bg-white border-r border-slate-200 justify-between">
+    <aside class="hidden lg:flex lg:flex-col lg:w-64 xl:w-72 lg:fixed lg:inset-y-0 lg:z-40 bg-white border-r border-slate-200 justify-between overflow-y-auto sidebar-scroll select-none">
         <!-- Top Section -->
         <div>
             <!-- Brand / Logo Header -->
@@ -135,7 +159,6 @@
                     <div>
                         <div class="flex items-center space-x-1.5">
                             <span class="text-base font-extrabold tracking-tight text-slate-900 group-hover:text-emerald-700 transition-colors">WARGA DIGITAL</span>
-                            <!-- <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">RW 05</span> -->
                         </div>
                         <span class="block text-[11px] font-medium text-slate-500">Sistem Administrasi Multi-RT</span>
                     </div>
@@ -179,6 +202,28 @@
                         @endif
                     </nav>
                 </div>
+
+                <!-- Group: Kesejahteraan & Bansos -->
+                @if(auth()->user()?->canManageSocialAid())
+                <div>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Kesejahteraan & Bansos</span>
+                    <nav class="space-y-1">
+                        <a href="{{ route('social-aid.welfare-mapping') }}" 
+                           wire:navigate
+                           class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('social-aid.welfare-mapping*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                            <svg class="w-5 h-5 {{ request()->routeIs('social-aid.welfare-mapping*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                            <span>Pemetaan DTKS</span>
+                        </a>
+
+                        <a href="{{ route('social-aid.programs.index') }}" 
+                           wire:navigate
+                           class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('social-aid.programs*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                            <svg class="w-5 h-5 {{ request()->routeIs('social-aid.programs*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                            <span>Program Bansos</span>
+                        </a>
+                    </nav>
+                </div>
+                @endif
 
                 <!-- Group: Keuangan & Iuran -->
                 @if(auth()->user()?->canManageFinance())
@@ -224,15 +269,23 @@
                         <a href="{{ route('residents.export') }}" 
                            class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
                             <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                            <span>Unduh Excel (.xlsx)</span>
+                            <span>Unduh Data Warga (.xlsx)</span>
                         </a>
+
+                        @if(auth()->user()?->canManageSocialAid())
+                        <a href="{{ route('social-aid.dtks-export') }}" 
+                           class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+                            <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <span>Unduh Usulan DTKS (.xlsx)</span>
+                        </a>
+                        @endif
                     </nav>
                 </div>
             </div>
         </div>
 
         <!-- Bottom User & Role Switcher Section -->
-        <div class="p-4 border-t border-slate-200 bg-slate-50/60 space-y-3">
+        <div class="p-4 border-t border-slate-200 bg-slate-50/60 space-y-3 shrink-0">
             @auth
                 <!-- Profil Pengguna Aktif -->
                 <div class="flex items-center space-x-2.5 bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs">
@@ -346,6 +399,34 @@
                         <span class="text-sm font-semibold">{{ session('error') }}</span>
                     </div>
                     <button type="button" onclick="this.parentElement.remove()" class="text-rose-700 hover:text-rose-900 p-1 rounded-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            @endif
+
+            @if (session()->has('warning'))
+                <div class="bg-amber-50 border border-amber-200 text-amber-900 px-4 py-3 rounded-xl shadow-sm mb-4 flex items-center justify-between" role="alert">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-7 h-7 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        </div>
+                        <span class="text-sm font-semibold">{{ session('warning') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-amber-700 hover:text-amber-900 p-1 rounded-lg">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            @endif
+
+            @if (session()->has('info'))
+                <div class="bg-blue-50 border border-blue-200 text-blue-900 px-4 py-3 rounded-xl shadow-sm mb-4 flex items-center justify-between" role="alert">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <span class="text-sm font-semibold">{{ session('info') }}</span>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-blue-700 hover:text-blue-900 p-1 rounded-lg">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
                 </div>

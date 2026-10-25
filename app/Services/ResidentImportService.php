@@ -327,6 +327,8 @@ class ResidentImportService
                         ]
                     );
 
+                    $house->getOrCreateSocialProfile();
+
                     $housesMap[$noRumah] = $house->id;
                     $housesCount++;
                 }

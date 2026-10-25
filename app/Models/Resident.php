@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Resident extends Model
 {
@@ -32,6 +33,14 @@ class Resident extends Model
     public function house(): BelongsTo
     {
         return $this->belongsTo(House::class);
+    }
+
+    /**
+     * @return HasMany<SocialAidRecipient, $this>
+     */
+    public function socialAidRecipients(): HasMany
+    {
+        return $this->hasMany(SocialAidRecipient::class);
     }
 
     /**

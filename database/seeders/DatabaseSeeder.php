@@ -230,5 +230,8 @@ class DatabaseSeeder extends Seeder
 
         // 3. Seed Modul Keuangan & Kas (Tarif, Iuran, Buku Kas)
         $this->call(FinanceSeeder::class);
+
+        // 4. Seed Modul Kesejahteraan & Bansos (Profil Sosial, Program, Kuota, Usulan)
+        $this->call(SocialAidSeeder::class);
     }
 }

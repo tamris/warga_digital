@@ -1,11 +1,11 @@
 <div class="space-y-6">
     <!-- Top Action Bar -->
     <div class="flex items-center justify-between">
-        <a href="{{ route('houses.index') }}" 
+        <a href="{{ $this->getBackUrl() }}" 
            wire:navigate
            class="inline-flex items-center space-x-2 text-slate-700 hover:text-slate-900 text-sm font-semibold bg-white border border-slate-200 px-3.5 py-2 rounded-lg shadow-sm transition">
             <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            <span>Kembali ke Daftar Rumah</span>
+            <span>{{ $this->getBackLabel() }}</span>
         </a>
 
         @if(auth()->user()->canManageHouse())
