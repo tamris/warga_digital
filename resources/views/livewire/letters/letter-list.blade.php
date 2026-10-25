@@ -233,7 +233,7 @@
                     <tr class="hover:bg-slate-50/80 transition-colors {{ in_array($letter->status, ['dibatalkan', 'ditolak', 'ditolak_rt', 'ditolak_rw']) ? 'opacity-75 bg-rose-50/20' : ($letter->status === 'menunggu_rt' ? 'bg-amber-50/35' : ($letter->status === 'menunggu_rw' ? 'bg-amber-50/25' : '')) }}">
                         <td class="py-3.5 px-5">
                             <div class="font-bold text-slate-900 text-sm font-mono tracking-tight">{{ $letter->nomor_surat }}</div>
-                            <div class="text-[11px] text-slate-400 mt-0.5">Dibuat oleh: {{ $letter->creator?->nama ?? 'Pengurus' }}</div>
+                            <div class="text-[11px] text-slate-400 mt-0.5">Dibuat oleh: {{ $letter->creator_name }}</div>
                         </td>
 
                         <td class="py-3.5 px-4 whitespace-nowrap text-xs font-semibold text-slate-700">

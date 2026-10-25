@@ -109,10 +109,10 @@
                     <span>Buku Kas Operasional</span>
                 </a>
                 @endif
-                @if(auth()->user()?->isAdminRw())
+                @if(auth()->user()?->canManageCredentials())
                 <a href="{{ route('rts.index') }}" wire:navigate class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('rts.*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
                     <svg class="w-5 h-5 {{ request()->routeIs('rts.*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span>Data Master RT</span>
+                    <span>{{ auth()->user()?->isAdminRw() ? 'Wilayah & Kepengurusan' : 'Kepengurusan RT' }}</span>
                 </a>
                 @endif
                 <a href="{{ route('residents.export') }}" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
@@ -247,16 +247,18 @@
                 </div>
                 @endif
 
-                <!-- Group: Administrasi RW (Khusus Admin / Ketua RW) -->
-                @if(auth()->user()?->isAdminRw())
+                <!-- Group: Administrasi / Kepengurusan -->
+                @if(auth()->user()?->canManageCredentials())
                 <div>
-                    <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">Administrasi Wilayah</span>
+                    <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-2">
+                        {{ auth()->user()?->isAdminRw() ? 'Administrasi Wilayah' : 'Kepengurusan Lingkungan' }}
+                    </span>
                     <nav class="space-y-1">
                         <a href="{{ route('rts.index') }}" 
                            wire:navigate
                            class="flex items-center space-x-3 px-3.5 py-2.5 rounded-lg text-sm font-semibold transition {{ request()->routeIs('rts.*') ? 'bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-sm font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
                             <svg class="w-5 h-5 {{ request()->routeIs('rts.*') ? 'text-emerald-600' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>Data Master RT</span>
+                            <span>{{ auth()->user()?->isAdminRw() ? 'Wilayah & Kepengurusan' : 'Kepengurusan RT' }}</span>
                         </a>
                     </nav>
                 </div>

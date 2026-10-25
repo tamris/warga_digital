@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Resident extends Model
 {
@@ -41,6 +42,14 @@ class Resident extends Model
     public function socialAidRecipients(): HasMany
     {
         return $this->hasMany(SocialAidRecipient::class);
+    }
+
+    /**
+     * @return HasOne<User, $this>
+     */
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class);
     }
 
     /**

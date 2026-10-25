@@ -33,6 +33,9 @@ class HouseIndex extends Component
     #[Url(as: 'status')]
     public string $statusHuni = '';
 
+    #[Url(as: 'urutkan')]
+    public string $sortBy = 'terbaru';
+
     // Properti Modal Form Tambah/Edit Rumah Manual
     public bool $showModal = false;
 
@@ -117,6 +120,11 @@ class HouseIndex extends Component
     }
 
     public function updatingStatusHuni(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSortBy(): void
     {
         $this->resetPage();
     }
@@ -476,7 +484,7 @@ class HouseIndex extends Component
             ->count();
 
         // Query Data Rumah
-        $houses = House::with(['rt', 'headOfFamily'])
+        $housesQuery = House::with(['rt', 'headOfFamily'])
             ->accessibleBy($user, $this->selectedRtId)
             ->when($this->statusHuni, fn ($q) => $q->where('status_huni', $this->statusHuni))
             ->when($this->search, function ($query) {
@@ -485,10 +493,16 @@ class HouseIndex extends Component
                         $q->where('nama_lengkap', 'like', '%'.$this->search.'%');
                     });
             })
-            ->withCount(['residents as total_jiwa' => fn ($q) => $q->where('status_warga', 'aktif')])
-            ->orderBy('rt_id')
-            ->orderBy('nomor_rumah')
-            ->paginate(15);
+            ->withCount(['residents as total_jiwa' => fn ($q) => $q->where('status_warga', 'aktif')]);
+
+        match ($this->sortBy) {
+            'terlama' => $housesQuery->oldest('id'),
+            'nomor_asc' => $housesQuery->orderBy('nomor_rumah', 'asc'),
+            'nomor_desc' => $housesQuery->orderBy('nomor_rumah', 'desc'),
+            default => $housesQuery->latest('id'),
+        };
+
+        $houses = $housesQuery->paginate(15);
 
         // Query Data Sensus (jika aktif di tab sensus)
         $sensusSubmissions = null;

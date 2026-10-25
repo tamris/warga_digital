@@ -35,6 +35,9 @@ class ResidentIndex extends Component
     #[Url(as: 'status')]
     public string $statusWarga = 'aktif';
 
+    #[Url(as: 'urutkan')]
+    public string $sortBy = 'terbaru';
+
     public function mount(): void
     {
         $user = auth()->user();
@@ -80,6 +83,7 @@ class ResidentIndex extends Component
         $this->filterBalita = false;
         $this->filterDomisiliLuar = false;
         $this->statusWarga = 'aktif';
+        $this->sortBy = 'terbaru';
 
         $user = auth()->user();
         if ($user && $user->isAdminRw()) {
@@ -89,13 +93,18 @@ class ResidentIndex extends Component
         $this->resetPage();
     }
 
+    public function updatingSortBy(): void
+    {
+        $this->resetPage();
+    }
+
     public function render(): View
     {
         $user = auth()->user();
         $rts = Rt::orderBy('nomor_rt')->get();
 
         $query = Resident::query()
-            ->with(['house.rt'])
+            ->with(['house.rt', 'user'])
             ->accessibleBy($user, $this->selectedRtId);
 
         // Filter Pencarian Teks
@@ -134,7 +143,14 @@ class ResidentIndex extends Component
             $query->where('status_warga', $this->statusWarga);
         }
 
-        $residents = $query->orderBy('nama_lengkap', 'asc')->paginate(12);
+        match ($this->sortBy) {
+            'terlama' => $query->oldest('id'),
+            'nama_asc' => $query->orderBy('nama_lengkap', 'asc'),
+            'nama_desc' => $query->orderBy('nama_lengkap', 'desc'),
+            default => $query->latest('id'),
+        };
+
+        $residents = $query->paginate(12);
 
         // Parameter query string untuk URL unduh Excel
         $exportParams = array_filter([

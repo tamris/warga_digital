@@ -24,7 +24,7 @@
         <!-- Baris 1: Pencarian & Dropdown -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
             <!-- Search Input -->
-            <div class="{{ $user->isAdminRw() ? 'md:col-span-6' : 'md:col-span-8' }}">
+            <div class="{{ $user->isAdminRw() ? 'md:col-span-4' : 'md:col-span-6' }}">
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -43,10 +43,10 @@
 
             <!-- Filter RT (Khusus Admin RW) -->
             @if($user->isAdminRw())
-            <div class="md:col-span-3">
+            <div class="md:col-span-2">
                 <select wire:model.live="selectedRtId" 
                         class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
-                    <option value="">Semua Wilayah RT</option>
+                    <option value="">Semua RT</option>
                     @foreach($rts as $rt)
                         <option value="{{ $rt->id }}">RT {{ $rt->nomor_rt }}</option>
                     @endforeach
@@ -55,13 +55,24 @@
             @endif
 
             <!-- Status Warga -->
-            <div class="{{ $user->isAdminRw() ? 'md:col-span-3' : 'md:col-span-4' }}">
+            <div class="md:col-span-3">
                 <select wire:model.live="statusWarga" 
                         class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                     <option value="aktif">Warga Aktif</option>
                     <option value="pindah">Riwayat Pindah Keluar</option>
                     <option value="meninggal">Warga Meninggal</option>
                     <option value="semua">Semua Status Warga</option>
+                </select>
+            </div>
+
+            <!-- Urutkan -->
+            <div class="md:col-span-3">
+                <select wire:model.live="sortBy" 
+                        class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
+                    <option value="terbaru">Data Terbaru</option>
+                    <option value="terlama">Data Terlama</option>
+                    <option value="nama_asc">Nama Warga (A-Z)</option>
+                    <option value="nama_desc">Nama Warga (Z-A)</option>
                 </select>
             </div>
         </div>
@@ -152,7 +163,20 @@
                         <tr class="hover:bg-slate-50/80 transition-colors {{ $res->status_warga !== 'aktif' ? 'bg-slate-50/50 text-slate-400' : '' }}">
                             <!-- 1. Nama Lengkap & NIK -->
                             <td class="py-3.5 px-5">
-                                <div class="font-bold text-slate-900 text-sm">{{ $res->nama_lengkap }}</div>
+                                <div class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 flex-wrap">
+                                    <span>{{ $res->nama_lengkap }}</span>
+                                    @if($res->user)
+                                        @if($res->user->role === 'ketua_rt')
+                                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-slate-900 text-white">Ketua RT {{ $res->house?->rt?->nomor_rt }}</span>
+                                        @elseif($res->user->role === 'sekretaris_rt')
+                                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">Sekretaris RT {{ $res->house?->rt?->nomor_rt }}</span>
+                                        @elseif($res->user->role === 'bendahara_rt')
+                                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">Bendahara RT {{ $res->house?->rt?->nomor_rt }}</span>
+                                        @elseif($res->user->isRwLevel())
+                                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-300">Pengurus RW</span>
+                                        @endif
+                                    @endif
+                                </div>
                                 <div class="text-xs font-mono text-slate-400 mt-0.5">NIK: {{ $res->nik }}</div>
                             </td>
 

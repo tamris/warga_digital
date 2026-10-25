@@ -30,6 +30,20 @@ class HouseDue extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saving(function (HouseDue $due) {
+            if ($due->status === 'lunas' && empty($due->received_by_name) && auth()->check()) {
+                $due->received_by_name = auth()->user()->nama;
+            }
+        });
+    }
+
+    public function getReceiverNameAttribute(): ?string
+    {
+        return $this->received_by_name ?: ($this->receivedBy?->nama);
+    }
+
     /**
      * @return BelongsTo<House, $this>
      */

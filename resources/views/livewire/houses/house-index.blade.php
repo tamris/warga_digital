@@ -97,7 +97,7 @@
 
                 <!-- Filter RT (Admin RW) -->
                 @if($user->isAdminRw())
-                <div class="sm:w-56 shrink-0">
+                <div class="sm:w-52 shrink-0">
                     <select wire:model.live="selectedRtId" 
                             class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
                         <option value="">Semua Wilayah RT</option>
@@ -108,29 +108,26 @@
                 </div>
                 @endif
 
-                <!-- Tab Pill Filter Status -->
-                <div x-data="{ activeStatus: $wire.entangle('statusHuni').live }" 
-                     class="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl shrink-0 overflow-x-auto text-xs font-semibold">
-                    <button type="button" @click="activeStatus = ''" 
-                            :class="activeStatus === '' ? 'bg-white text-slate-900 shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'"
-                            class="px-3 py-2 rounded-lg transition">
-                        Semua
-                    </button>
-                    <button type="button" @click="activeStatus = 'dihuni_pemilik'" 
-                            :class="activeStatus === 'dihuni_pemilik' ? 'bg-white text-emerald-800 shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'"
-                            class="px-3 py-2 rounded-lg transition">
-                        Dihuni
-                    </button>
-                    <button type="button" @click="activeStatus = 'kontrak'" 
-                            :class="activeStatus === 'kontrak' ? 'bg-white text-sky-800 shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'"
-                            class="px-3 py-2 rounded-lg transition">
-                        Kontrak
-                    </button>
-                    <button type="button" @click="activeStatus = 'kosong'" 
-                            :class="activeStatus === 'kosong' ? 'bg-white text-slate-800 shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'"
-                            class="px-3 py-2 rounded-lg transition">
-                        Kosong
-                    </button>
+                <!-- Filter Status Huni (Dropdown) -->
+                <div class="sm:w-48 shrink-0">
+                    <select wire:model.live="statusHuni" 
+                            class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
+                        <option value="">Semua Status Huni</option>
+                        <option value="dihuni_pemilik">Dihuni Pemilik</option>
+                        <option value="kontrak">Rumah Kontrakan</option>
+                        <option value="kosong">Rumah Kosong</option>
+                    </select>
+                </div>
+
+                <!-- Filter Urutkan (Dropdown) -->
+                <div class="sm:w-48 shrink-0">
+                    <select wire:model.live="sortBy" 
+                            class="w-full h-11 px-3 border border-slate-300 rounded-xl text-sm font-semibold text-slate-700 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none">
+                        <option value="terbaru">Data Terbaru</option>
+                        <option value="terlama">Data Terlama</option>
+                        <option value="nomor_asc">Nomor Rumah (A-Z)</option>
+                        <option value="nomor_desc">Nomor Rumah (Z-A)</option>
+                    </select>
                 </div>
             </div>
         </div>

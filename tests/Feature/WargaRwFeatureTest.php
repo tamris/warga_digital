@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Livewire\Houses\HouseDetail;
 use App\Livewire\Houses\HouseIndex;
+use App\Livewire\Residents\ResidentIndex;
 use App\Models\House;
 use App\Models\Resident;
 use App\Models\Rt;
@@ -42,7 +43,7 @@ class WargaRwFeatureTest extends TestCase
         Livewire::actingAs($admin)
             ->test(HouseIndex::class)
             ->assertOk()
-            ->assertSee('Blok 001-A No. 01')
+            ->assertSee('Blok 003-A No. 01')
             ->assertSee('Blok 002-A No. 01')
             ->set('selectedRtId', 1)
             ->assertSee('Blok 001-A No. 01')
@@ -184,5 +185,29 @@ class WargaRwFeatureTest extends TestCase
             ->test(HouseDetail::class, ['id' => $house->id])
             ->call('openCreateResidentModal')
             ->assertForbidden();
+    }
+
+    public function test_house_index_supports_sorting_and_status_filter(): void
+    {
+        $admin = User::where('role', 'admin_rw')->firstOrFail();
+
+        Livewire::actingAs($admin)
+            ->test(HouseIndex::class)
+            ->assertSet('sortBy', 'terbaru')
+            ->set('sortBy', 'nomor_asc')
+            ->assertSet('sortBy', 'nomor_asc')
+            ->set('statusHuni', 'dihuni_pemilik')
+            ->assertSet('statusHuni', 'dihuni_pemilik');
+    }
+
+    public function test_resident_index_supports_sorting(): void
+    {
+        $admin = User::where('role', 'admin_rw')->firstOrFail();
+
+        Livewire::actingAs($admin)
+            ->test(ResidentIndex::class)
+            ->assertSet('sortBy', 'terbaru')
+            ->set('sortBy', 'nama_asc')
+            ->assertSet('sortBy', 'nama_asc');
     }
 }

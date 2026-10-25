@@ -115,7 +115,7 @@
                                 {{ $pending->clean_keterangan }}
                             </p>
                             <div class="text-[11px] text-slate-500 flex items-center space-x-2">
-                                <span>Dicatat oleh: <strong class="text-slate-700">{{ $pending->user?->nama ?? 'Pengurus RT' }}</strong></span>
+                                <span>Dicatat oleh: <strong class="text-slate-700">{{ $pending->recorder_name }}</strong></span>
                                 @if($pending->bukti_foto)
                                     <span>•</span>
                                     <button type="button" 
@@ -330,11 +330,11 @@
                             <td class="py-3.5 px-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-2">
                                     <div class="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-600 shrink-0">
-                                        {{ strtoupper(substr($trx->user?->nama ?? 'P', 0, 1)) }}
+                                        {{ strtoupper(substr($trx->recorder_name, 0, 1)) }}
                                     </div>
                                     <div class="min-w-0">
-                                        <div class="text-xs font-semibold text-slate-800 truncate max-w-[140px]">{{ $trx->user?->nama ?? 'Pengurus' }}</div>
-                                        <div class="text-[10px] text-slate-400 truncate max-w-[140px]">{{ $trx->user?->role_label ?? 'Pengurus' }}</div>
+                                        <div class="text-xs font-semibold text-slate-800 truncate max-w-[140px]">{{ $trx->recorder_name }}</div>
+                                        <div class="text-[10px] text-slate-400 truncate max-w-[140px]">{{ $trx->user?->role_label ?? 'Pengurus RT/RW' }}</div>
                                     </div>
                                 </div>
                             </td>

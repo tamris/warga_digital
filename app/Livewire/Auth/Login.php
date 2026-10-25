@@ -48,6 +48,12 @@ class Login extends Component
             ->orWhereRaw('LOWER(REPLACE(nama, " ", "")) = ?', [strtolower(str_replace(['_', ' '], '', $input))])
             ->first();
 
+        if ($user && ! $user->isActive()) {
+            $this->addError('username', 'Akun pengurus ini berstatus nonaktif (purna tugas). Silakan hubungi Ketua RW.');
+
+            return;
+        }
+
         $credentials = $user
             ? ['username' => $user->username, 'password' => $this->password]
             : ['username' => $input, 'password' => $this->password];
@@ -71,6 +77,12 @@ class Login extends Component
             : User::where('username', $identifier)->orWhere('role', $identifier)->first();
 
         if ($user) {
+            if (! $user->isActive()) {
+                session()->flash('error', 'Akun pengurus ini berstatus nonaktif (purna tugas).');
+
+                return;
+            }
+
             Auth::login($user);
             session()->regenerate();
             session()->flash('success', 'Berhasil masuk sebagai '.$user->nama.' ('.$user->role_label.')');

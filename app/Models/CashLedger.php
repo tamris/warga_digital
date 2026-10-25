@@ -28,6 +28,20 @@ class CashLedger extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::creating(function (CashLedger $ledger) {
+            if (empty($ledger->recorded_by_name) && auth()->check()) {
+                $ledger->recorded_by_name = auth()->user()->nama;
+            }
+        });
+    }
+
+    public function getRecorderNameAttribute(): string
+    {
+        return $this->recorded_by_name ?: ($this->user?->nama ?? 'Pengurus RT');
+    }
+
     /**
      * @return BelongsTo<Rt, $this>
      */

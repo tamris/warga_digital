@@ -31,7 +31,13 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
+    }
+
+    public function isActive(): bool
+    {
+        return (bool) ($this->is_active ?? true);
     }
 
     /**
@@ -40,6 +46,14 @@ class User extends Authenticatable
     public function rt(): BelongsTo
     {
         return $this->belongsTo(Rt::class);
+    }
+
+    /**
+     * @return BelongsTo<Resident, $this>
+     */
+    public function resident(): BelongsTo
+    {
+        return $this->belongsTo(Resident::class);
     }
 
     public function isAdminRw(): bool
@@ -135,6 +149,11 @@ class User extends Authenticatable
     public function isPengurusRt(): bool
     {
         return in_array($this->role, ['ketua_rt', 'sekretaris_rt', 'bendahara_rt'], true);
+    }
+
+    public function canManageCredentials(): bool
+    {
+        return $this->isAdminRw() || $this->isKetuaRt();
     }
 
     public function getRoleLabelAttribute(): string

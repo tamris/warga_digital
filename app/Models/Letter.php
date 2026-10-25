@@ -32,6 +32,11 @@ class Letter extends Model
         ];
     }
 
+    public function getCreatorNameAttribute(): string
+    {
+        return $this->created_by_name ?: ($this->creator?->nama ?: ($this->nama_ketua_rt ?: 'Pengurus'));
+    }
+
     /**
      * @return BelongsTo<Rt, $this>
      */
@@ -114,6 +119,10 @@ class Letter extends Model
         static::creating(function (Letter $letter) {
             if (empty($letter->verification_code)) {
                 $letter->verification_code = bin2hex(random_bytes(16));
+            }
+
+            if (empty($letter->created_by_name) && auth()->check()) {
+                $letter->created_by_name = auth()->user()->nama;
             }
         });
     }
