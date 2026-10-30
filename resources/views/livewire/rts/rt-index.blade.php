@@ -1,15 +1,15 @@
 <div class="space-y-6">
     <!-- Header Halaman -->
-    <div class="bg-white rounded-xl p-5 sm:p-6 border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div class="bg-white dark:bg-[#111b2f] rounded-xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
                 @if(auth()->user()->isKetuaRt())
                     Kelola Kepengurusan RT {{ auth()->user()->rt?->nomor_rt }}
                 @else
                     Kelola Wilayah & Kepengurusan
                 @endif
             </h1>
-            <p class="text-sm text-slate-600 mt-1 font-medium">
+            <p class="text-sm text-slate-600 dark:text-slate-400 mt-1 font-medium">
                 @if(auth()->user()->isKetuaRt())
                     Pusat kendali akun pengurus (Sekretaris & Bendahara) wilayah RT {{ auth()->user()->rt?->nomor_rt }}
                 @else
@@ -22,8 +22,8 @@
             @if(auth()->user()->isAdminRw())
                 @if($activeTab === 'rt')
                     <button type="button" wire:click="openCreateModal" 
-                            class="h-10 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold text-xs px-3.5 rounded-lg shadow-2xs transition inline-flex items-center space-x-1.5">
-                        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                            class="h-10 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 font-semibold text-xs px-3.5 rounded-lg shadow-2xs transition inline-flex items-center space-x-1.5 dark:bg-[#172440] dark:border-[#26395c] dark:text-slate-200 dark:hover:bg-[#1f3156] dark:hover:border-[#3b558f]">
+                        <svg class="w-4 h-4 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         <span>Tambah Wilayah RT</span>
                     </button>
 
@@ -51,21 +51,21 @@
 
     <!-- Navigation Tabs (Hanya ditampilkan untuk Pengurus RW) -->
     @if(auth()->user()->isAdminRw())
-    <div class="bg-white rounded-xl border border-slate-200 shadow-2xs p-1.5 flex items-center space-x-1">
+    <div class="bg-white dark:bg-[#111b2f] rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs p-1.5 flex items-center space-x-1">
         <button type="button" wire:click="switchTab('rt')"
-                class="flex-1 sm:flex-none flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-xs sm:text-sm font-bold transition {{ $activeTab === 'rt' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                class="flex-1 sm:flex-none flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-xs sm:text-sm font-bold transition {{ $activeTab === 'rt' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#172440]' }}">
             <svg class="w-4 h-4 {{ $activeTab === 'rt' ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
             <span>Pengurus & Wilayah RT</span>
-            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $activeTab === 'rt' ? 'bg-emerald-700/60 text-white' : 'bg-slate-200/80 text-slate-700' }}">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $activeTab === 'rt' ? 'bg-emerald-700/60 text-white' : 'bg-slate-200/80 dark:bg-[#172440] text-slate-700 dark:text-slate-300 dark:border dark:border-[#26395c]' }}">
                 {{ $rts->count() }} RT
             </span>
         </button>
 
         <button type="button" wire:click="switchTab('rw')"
-                class="flex-1 sm:flex-none flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-xs sm:text-sm font-bold transition {{ $activeTab === 'rw' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100' }}">
+                class="flex-1 sm:flex-none flex items-center justify-center space-x-2 py-2 px-4 rounded-lg text-xs sm:text-sm font-bold transition {{ $activeTab === 'rw' ? 'bg-emerald-600 text-white shadow-2xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-[#172440]' }}">
             <svg class="w-4 h-4 {{ $activeTab === 'rw' ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
             <span>Pengurus Tingkat RW</span>
-            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $activeTab === 'rw' ? 'bg-emerald-700/60 text-white' : 'bg-slate-200/80 text-slate-700' }}">
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-semibold {{ $activeTab === 'rw' ? 'bg-emerald-700/60 text-white' : 'bg-slate-200/80 dark:bg-[#172440] text-slate-700 dark:text-slate-300 dark:border dark:border-[#26395c]' }}">
                 {{ $rwAccounts->count() }} Pejabat
             </span>
         </button>
@@ -86,17 +86,17 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                 @foreach($rts as $rt)
-                <div class="bg-white rounded-xl border border-slate-200 shadow-2xs p-4 flex flex-col justify-between hover:border-emerald-300 hover:shadow-xs transition group">
+                <div class="bg-white dark:bg-[#111b2f] rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xs p-4 flex flex-col justify-between hover:border-emerald-300 dark:hover:border-emerald-500/50 hover:shadow-xs transition group">
                     <div>
                         <!-- Header Kartu RT -->
                         <div class="flex items-center justify-between mb-2.5">
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-black bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-black bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
                                 RT {{ $rt->nomor_rt }}
                             </span>
 
                             <div class="flex items-center space-x-1">
                                 <button type="button" wire:click="openEditModal({{ $rt->id }})" 
-                                        class="text-xs text-slate-500 hover:text-slate-800 font-semibold p-1 hover:bg-slate-100 rounded transition"
+                                        class="text-xs text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white font-semibold p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition"
                                         title="Edit Data RT {{ $rt->nomor_rt }}">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                 </button>
@@ -105,8 +105,8 @@
 
                         <!-- Ketua RT & WA -->
                         <div class="space-y-1">
-                            <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Ketua RT:</div>
-                            <div class="font-bold text-slate-900 text-sm truncate" title="{{ $rt->nama_ketua }}">
+                            <div class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Ketua RT:</div>
+                            <div class="font-bold text-slate-900 dark:text-white text-sm truncate" title="{{ $rt->nama_ketua }}">
                                 {{ $rt->nama_ketua ?? 'Belum diatur' }}
                             </div>
 
@@ -114,7 +114,7 @@
                                 @if($rt->no_wa_ketua)
                                     <a href="https://wa.me/{{ preg_replace('/^0/', '62', preg_replace('/[^0-9]/', '', $rt->no_wa_ketua)) }}" 
                                        target="_blank" 
-                                       class="inline-flex items-center space-x-1.5 text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200 transition shadow-2xs"
+                                       class="inline-flex items-center space-x-1.5 text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 transition shadow-2xs"
                                        title="Chat via WhatsApp">
                                         <svg class="w-3 h-3 fill-[#25D366] shrink-0" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                                         <span class="font-mono text-xs">{{ $rt->formatted_wa_ketua }}</span>
@@ -127,14 +127,14 @@
                     </div>
 
                     <!-- Footer Kartu RT: Statistik & Link -->
-                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500 font-semibold">
-                            {{ $rt->houses_count }} Rumah <span class="text-slate-300">•</span> <strong class="text-emerald-700 font-bold">{{ $rt->residents_count }} Warga</strong>
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 dark:text-slate-400 font-semibold">
+                            {{ $rt->houses_count }} Rumah <span class="text-slate-300 dark:text-slate-600">•</span> <strong class="text-emerald-700 dark:text-emerald-400 font-bold">{{ $rt->residents_count }} Warga</strong>
                         </span>
 
                         <a href="{{ route('houses.index', ['rt' => $rt->id]) }}" 
                            wire:navigate
-                           class="text-xs font-bold text-slate-700 hover:text-emerald-700 inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
+                           class="text-xs font-bold text-slate-700 dark:text-slate-300 hover:text-emerald-700 dark:hover:text-emerald-400 inline-flex items-center space-x-1 group-hover:translate-x-0.5 transition">
                             <span>Buka</span>
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         </a>
@@ -146,17 +146,17 @@
         @endif
 
         <!-- 2. Tabel Utama: Kelola Akun Pengurus RT (Bisa Edit & Hapus Kredensial) -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="bg-white dark:bg-[#111b2f] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <!-- Toolbar Atas Tabel Akun -->
-            <div class="p-4 sm:p-5 border-b border-slate-200/80 flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-slate-50/50">
+            <div class="p-4 sm:p-5 border-b border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-slate-50/50 dark:bg-[#0c1322]">
                 <div>
-                    <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                    <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                         <span>Daftar Akun Pengurus Rukun Tetangga (RT)</span>
-                        <span class="px-2 py-0.5 text-xs font-bold bg-slate-200/80 text-slate-700 rounded-full">
+                        <span class="px-2 py-0.5 text-xs font-bold bg-slate-200/80 dark:bg-[#172440] text-slate-700 dark:text-slate-300 dark:border dark:border-[#26395c] rounded-full">
                             {{ $accounts->total() }} Akun
                         </span>
                     </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         @if(auth()->user()->isKetuaRt())
                             Kelola kredensial login akun Sekretaris dan Bendahara untuk wilayah RT {{ auth()->user()->rt?->nomor_rt }}.
                         @else
@@ -174,13 +174,13 @@
                         </div>
                         <input type="text" wire:model.live.debounce.250ms="accountSearch" 
                                 placeholder="Cari pengurus..." 
-                                class="h-9 pl-8 pr-3 text-xs rounded-lg border border-slate-300 text-slate-900 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none w-40 sm:w-48 bg-white">
+                                class="h-9 pl-8 pr-3 text-xs rounded-lg border border-slate-300 dark:border-[#223558] text-slate-900 dark:text-slate-100 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none w-40 sm:w-48 bg-white dark:bg-[#0c1322]">
                     </div>
 
                     <!-- Filter RT (Hanya untuk Admin RW) -->
                     @if(auth()->user()->isAdminRw())
                     <select wire:model.live="accountRtFilter" 
-                            class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white">
+                            class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-[#223558] text-slate-700 dark:text-slate-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white dark:bg-[#0c1322]">
                         <option value="">Semua Wilayah RT</option>
                         @foreach($rts as $rt)
                             <option value="{{ $rt->id }}">RT {{ $rt->nomor_rt }}</option>
@@ -190,7 +190,7 @@
 
                     <!-- Filter Peran -->
                     <select wire:model.live="accountRoleFilter" 
-                            class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 text-slate-700 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white">
+                            class="h-9 px-2.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-[#223558] text-slate-700 dark:text-slate-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none bg-white dark:bg-[#0c1322]">
                         <option value="">Semua Jabatan</option>
                         <option value="ketua_rt">Ketua RT</option>
                         <option value="sekretaris_rt">Sekretaris RT</option>
@@ -203,7 +203,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <thead>
-                        <tr class="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0c1322] text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                             <th class="py-3 px-5">Nama Lengkap Pengurus</th>
                             <th class="py-3 px-4">Wilayah RT</th>
                             <th class="py-3 px-4">Peran / Jabatan</th>
@@ -213,25 +213,25 @@
                             <th class="py-3 px-5 text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                         @forelse($accounts as $acc)
-                            <tr class="hover:bg-slate-50/80 transition-colors">
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-[#142038] transition-colors">
                                 <!-- 1. Nama Lengkap -->
                                 <td class="py-3.5 px-5">
-                                    <div class="font-bold text-slate-900 text-sm">{{ $acc->nama }}</div>
+                                    <div class="font-bold text-slate-900 dark:text-white text-sm">{{ $acc->nama }}</div>
                                     @if($acc->resident)
-                                        <div class="inline-flex items-center space-x-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mt-1">
-                                            <svg class="w-3 h-3 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        <div class="inline-flex items-center space-x-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-800 mt-1">
+                                            <svg class="w-3 h-3 text-emerald-600 dark:text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                             <span>NIK: {{ $acc->resident->nik }} &bull; {{ $acc->resident->house?->nomor_rumah ?? 'RT '.$acc->rt?->nomor_rt }}</span>
                                         </div>
                                     @else
-                                        <div class="text-[11px] text-slate-400 mt-0.5">ID Akun: #{{ $acc->id }} &bull; Akun mandiri</div>
+                                        <div class="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">ID Akun: #{{ $acc->id }} &bull; Akun mandiri</div>
                                     @endif
                                 </td>
 
                                 <!-- 2. Wilayah RT -->
                                 <td class="py-3.5 px-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-slate-100 text-slate-800 border border-slate-200">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-slate-100 dark:bg-[#141f38] text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-[#203152]">
                                         RT {{ $acc->rt?->nomor_rt ?? '—' }}
                                     </span>
                                 </td>
@@ -239,19 +239,19 @@
                                 <!-- 3. Peran / Jabatan -->
                                 <td class="py-3.5 px-4 whitespace-nowrap">
                                     @if($acc->role === 'ketua_rt')
-                                        <span class="inline-block px-2.5 py-1 bg-slate-900 text-white font-bold text-xs rounded-md shadow-2xs">
+                                        <span class="inline-block px-2.5 py-1 bg-slate-900 dark:bg-[#1e2d4d] dark:border dark:border-[#384e7a] text-white font-bold text-xs rounded-md shadow-2xs">
                                             Ketua RT
                                         </span>
                                     @elseif($acc->role === 'sekretaris_rt')
-                                        <span class="inline-block px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold text-xs rounded-md">
+                                        <span class="inline-block px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-semibold text-xs rounded-md">
                                             Sekretaris RT
                                         </span>
                                     @elseif($acc->role === 'bendahara_rt')
-                                        <span class="inline-block px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 font-semibold text-xs rounded-md">
+                                        <span class="inline-block px-2.5 py-1 bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-semibold text-xs rounded-md">
                                             Bendahara RT
                                         </span>
                                     @else
-                                        <span class="inline-block px-2.5 py-1 bg-slate-100 text-slate-700 font-semibold text-xs rounded-md">
+                                        <span class="inline-block px-2.5 py-1 bg-slate-100 dark:bg-[#141f38] text-slate-700 dark:text-slate-300 font-semibold text-xs rounded-md border border-slate-200 dark:border-[#203152]">
                                             {{ $acc->role_label }}
                                         </span>
                                     @endif
@@ -259,7 +259,7 @@
 
                                 <!-- 4. Username Login -->
                                 <td class="py-3.5 px-4 whitespace-nowrap">
-                                    <span class="font-mono text-xs font-bold bg-slate-100 text-slate-800 px-2.5 py-1 rounded-md border border-slate-200">
+                                    <span class="font-mono text-xs font-bold bg-slate-100 dark:bg-[#101b2f] text-slate-800 dark:text-slate-200 px-2.5 py-1 rounded-md border border-slate-200 dark:border-[#1d2c4d]">
                                         {{ $acc->username }}
                                     </span>
                                 </td>
@@ -268,7 +268,7 @@
                                 <td class="py-3.5 px-4 whitespace-nowrap">
                                     @if($acc->no_wa)
                                         <a href="{{ $acc->wa_link }}" target="_blank" 
-                                           class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-800 hover:text-emerald-900 bg-emerald-50 hover:bg-emerald-100/80 px-2.5 py-1 rounded-lg border border-emerald-200 transition shadow-2xs"
+                                           class="inline-flex items-center space-x-1.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300 hover:text-emerald-900 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 px-2.5 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800 transition shadow-2xs"
                                            title="Chat via WhatsApp">
                                             <svg class="w-3.5 h-3.5 fill-[#25D366] shrink-0" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                                             <span class="font-mono">{{ $acc->formatted_wa }}</span>
@@ -281,12 +281,12 @@
                                 <!-- 6. Status -->
                                 <td class="py-3.5 px-4 text-center whitespace-nowrap">
                                     @if($acc->isActive())
-                                        <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold rounded-full text-xs">
+                                        <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 font-semibold rounded-full text-xs">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                             <span>Aktif</span>
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-300 font-semibold rounded-full text-xs">
+                                        <span class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 bg-slate-100 dark:bg-[#141f38] text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-[#26395c] font-semibold rounded-full text-xs">
                                             <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
                                             <span>Purna Tugas</span>
                                         </span>
@@ -297,14 +297,14 @@
                                 <td class="py-3.5 px-5 text-right whitespace-nowrap">
                                     <div class="inline-flex items-center space-x-1.5">
                                         <button type="button" wire:click="openEditUserModal({{ $acc->id }})" 
-                                                class="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 inline-flex items-center justify-center transition shadow-2xs group"
+                                                class="w-8 h-8 rounded-lg bg-white dark:bg-[#172440] hover:bg-slate-100 dark:hover:bg-[#21355a] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#26395c] inline-flex items-center justify-center transition shadow-2xs group"
                                                 title="Edit Akun & Ubah Kata Sandi">
-                                            <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                            <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-800 dark:text-slate-400 dark:group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                         </button>
 
                                         @if($acc->id !== auth()->id() && (! auth()->user()->isKetuaRt() || ! $acc->isKetuaRt()))
                                             <button type="button" wire:click="toggleUserStatus({{ $acc->id }})" 
-                                                    class="w-8 h-8 rounded-lg {{ $acc->isActive() ? 'bg-amber-50/70 hover:bg-amber-100 text-amber-700 border-amber-200' : 'bg-emerald-50/70 hover:bg-emerald-100 text-emerald-700 border-emerald-200' }} border inline-flex items-center justify-center transition shadow-2xs group"
+                                                    class="w-8 h-8 rounded-lg {{ $acc->isActive() ? 'bg-amber-50/70 hover:bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 dark:text-amber-400 dark:border-amber-700/50' : 'bg-emerald-50/70 hover:bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 dark:text-emerald-400 dark:border-emerald-700/50' }} border inline-flex items-center justify-center transition shadow-2xs group"
                                                     title="{{ $acc->isActive() ? 'Nonaktifkan Akun (Purna Tugas)' : 'Aktifkan Kembali Akun' }}">
                                                 @if($acc->isActive())
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
@@ -314,9 +314,9 @@
                                             </button>
 
                                             <button type="button" wire:click="confirmDeleteUser({{ $acc->id }})" 
-                                                    class="w-8 h-8 rounded-lg bg-rose-50/60 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200/80 inline-flex items-center justify-center transition shadow-2xs group"
+                                                    class="w-8 h-8 rounded-lg bg-rose-50/60 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200/80 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 dark:text-rose-400 dark:border-rose-700/50 inline-flex items-center justify-center transition shadow-2xs group"
                                                     title="Hapus Akun Pengurus">
-                                                <svg class="w-4 h-4 text-rose-500 group-hover:text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                <svg class="w-4 h-4 text-rose-500 group-hover:text-rose-700 dark:text-rose-400 dark:group-hover:text-rose-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                             </button>
                                         @endif
                                     </div>
@@ -347,16 +347,16 @@
     <!-- TAB 2: PENGURUS TINGKAT RW -->
     <div class="space-y-6">
         <!-- Card Tabel Pengurus RW -->
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="p-4 sm:p-5 border-b border-slate-200/80 flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-slate-50/50">
+        <div class="bg-white dark:bg-[#111b2f] rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div class="p-4 sm:p-5 border-b border-slate-200/80 dark:border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-3 bg-slate-50/50 dark:bg-[#0c1322]">
                 <div>
-                    <h2 class="text-base font-bold text-slate-900 flex items-center space-x-2">
+                    <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                         <span>Daftar Pengurus Pusat Rukun Warga</span>
-                        <span class="px-2 py-0.5 text-xs font-bold bg-slate-200/80 text-slate-700 rounded-full">
+                        <span class="px-2 py-0.5 text-xs font-bold bg-slate-200/80 dark:bg-[#172440] text-slate-700 dark:text-slate-300 dark:border dark:border-[#26395c] rounded-full">
                             {{ $rwAccounts->count() }} Pejabat RW
                         </span>
                     </h2>
-                    <p class="text-xs text-slate-500 mt-0.5">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         Pengurus RW mengkoordinasikan kegiatan lingkungan, bantuan sosial, legalitas surat pengantar, dan pembukuan kas pusat RW.
                     </p>
                 </div>
@@ -372,7 +372,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-sm">
                     <thead>
-                        <tr class="border-b border-slate-200 bg-slate-50 text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                        <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0c1322] text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider">
                             <th class="py-3 px-5">Nama Pejabat RW</th>
                             <th class="py-3 px-4">Jabatan & Hak Akses</th>
                             <th class="py-3 px-4">Username Login</th>
@@ -381,7 +381,7 @@
                             <th class="py-3 px-5 text-right">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                         @forelse($rwAccounts as $acc)
                             <tr class="hover:bg-slate-50/80 transition-colors">
                                 <!-- 1. Nama Lengkap -->
@@ -467,14 +467,14 @@
                                 <td class="py-3.5 px-5 text-right whitespace-nowrap">
                                     <div class="inline-flex items-center space-x-1.5">
                                         <button type="button" wire:click="openEditUserModal({{ $acc->id }})" 
-                                                class="w-8 h-8 rounded-lg bg-white hover:bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200 inline-flex items-center justify-center transition shadow-2xs group"
+                                                class="w-8 h-8 rounded-lg bg-white dark:bg-[#172440] hover:bg-slate-100 dark:hover:bg-[#21355a] text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-[#26395c] inline-flex items-center justify-center transition shadow-2xs group"
                                                 title="Edit Akun & Ubah Kata Sandi">
-                                            <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                            <svg class="w-4 h-4 text-slate-500 group-hover:text-slate-800 dark:text-slate-400 dark:group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                         </button>
 
                                         @if(! $acc->isAdminRw() && $acc->id !== auth()->id())
                                             <button type="button" wire:click="toggleUserStatus({{ $acc->id }})" 
-                                                    class="w-8 h-8 rounded-lg {{ $acc->isActive() ? 'bg-amber-50/70 hover:bg-amber-100 text-amber-700 border-amber-200' : 'bg-emerald-50/70 hover:bg-emerald-100 text-emerald-700 border-emerald-200' }} border inline-flex items-center justify-center transition shadow-2xs group"
+                                                    class="w-8 h-8 rounded-lg {{ $acc->isActive() ? 'bg-amber-50/70 hover:bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 dark:text-amber-400 dark:border-amber-700/50' : 'bg-emerald-50/70 hover:bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 dark:text-emerald-400 dark:border-emerald-700/50' }} border inline-flex items-center justify-center transition shadow-2xs group"
                                                     title="{{ $acc->isActive() ? 'Nonaktifkan Akun (Purna Tugas)' : 'Aktifkan Kembali Akun' }}">
                                                 @if($acc->isActive())
                                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
@@ -484,12 +484,12 @@
                                             </button>
 
                                             <button type="button" wire:click="confirmDeleteUser({{ $acc->id }})" 
-                                                    class="w-8 h-8 rounded-lg bg-rose-50/60 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200/80 inline-flex items-center justify-center transition shadow-2xs group"
+                                                    class="w-8 h-8 rounded-lg bg-rose-50/60 hover:bg-rose-100 text-rose-600 hover:text-rose-700 border border-rose-200/80 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 dark:text-rose-400 dark:border-rose-700/50 inline-flex items-center justify-center transition shadow-2xs group"
                                                     title="Hapus Akun Pengurus RW">
-                                                <svg class="w-4 h-4 text-rose-500 group-hover:text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                <svg class="w-4 h-4 text-rose-500 group-hover:text-rose-700 dark:text-rose-400 dark:group-hover:text-rose-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                             </button>
                                         @else
-                                            <span class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-200/60 inline-flex items-center justify-center text-slate-300 select-none" title="Akun Utama RW tidak dapat diubah statusnya">
+                                            <span class="w-8 h-8 rounded-lg bg-slate-50 dark:bg-[#0c1322] border border-slate-200/60 dark:border-[#1d2c4d] inline-flex items-center justify-center text-slate-300 dark:text-slate-600 select-none" title="Akun Utama RW tidak dapat diubah statusnya">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                                             </span>
                                         @endif
